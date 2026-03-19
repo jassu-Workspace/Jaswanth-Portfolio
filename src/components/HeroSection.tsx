@@ -61,10 +61,7 @@ export default function HeroSection() {
         animate="visible"
         className="text-center z-10 max-w-5xl relative"
       >
-        <motion.div variants={itemVariants} className="mb-6 inline-flex items-center gap-2 px-5 py-1.5 rounded-full border border-[#f5c842]/30 bg-[#f5c842]/5 text-[#f5c842] text-[11px] uppercase tracking-[0.3em] font-bold">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#f5c842] animate-pulse" />
-          System Online: SIH 2025 Finalist
-        </motion.div>
+
 
         <motion.h1
           variants={itemVariants}
