@@ -16,6 +16,7 @@ const edtechProjects = [
   },
   {
     title: "Horizon AI v1",
+    link: "https://horizon-ai-v2.vercel.app/",
     description:
       "SIH 2025 flagship (React/Node/Supabase/Gemini/PaddleOCR/YuNet). OCR verification, face recognition, learner profiling, gamification, qualified from 500+ teams via Team Portgas D Ace.",
     stack: ["React", "Node.js", "Supabase", "Gemini", "PaddleOCR", "YuNet"],
@@ -37,7 +38,7 @@ const edtechProjects = [
 const healthTechProjects = [
   {
     title: "Physiq-AI",
-    link: "https://physiq-ai.onrender.com",
+    link: "https://physiq-ai.vercel.app/",
     description:
       "Nutrition/fitness coach (React 19/TS/Tailwind/Vite/Firebase/Gemini). 12,228 foods (5 datasets incl. Indian/Ayurvedic), macro tracking, carb cycling, daily check-ins, 1000+ exercises, AI chat, Recharts progress. Firestore per-user isolation; 88+ Lighthouse.",
     stack: ["React 19", "TypeScript", "Tailwind", "Vite", "Firebase", "Gemini", "Recharts"],

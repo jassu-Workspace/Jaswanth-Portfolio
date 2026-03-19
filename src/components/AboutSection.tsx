@@ -15,9 +15,8 @@ const traits = [
 ];
 
 const socials = [
-  { label: "GitHub", href: "https://github.com", icon: "GH" },
-  { label: "LinkedIn", href: "https://linkedin.com", icon: "LI" },
-  { label: "Twitter", href: "https://twitter.com", icon: "TW" },
+  { label: "GitHub", href: "https://github.com/jassu-Workspace", icon: "GH" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/jaswanth-sri-sai-venkat-dangeti-639aa9348/", icon: "LI" },
 ];
 
 export default function AboutSection() {
