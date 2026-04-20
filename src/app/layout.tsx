@@ -1,23 +1,30 @@
 import type { Metadata } from "next";
-import { Space_Grotesk } from "next/font/google";
+import { Marcellus, Sora } from "next/font/google";
 import "./globals.css";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 
-const spaceGrotesk = Space_Grotesk({
+const sora = Sora({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
+  variable: "--font-sora",
+  display: "swap",
+});
+
+const marcellus = Marcellus({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-marcellus",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Jaswanth | AI/ML & Full-Stack Developer",
+  title: "Jaswanth | AI Systems & Product Engineer",
   description:
-    "Personal portfolio of Jaswanth — AI/ML & Full-Stack Architect. SIH 2025 Finalist, building Horizon AI and pushing the boundaries of intelligent software.",
-  keywords: ["Jaswanth", "AI ML Developer", "Full Stack", "Next.js", "Portfolio", "SIH 2025"],
+    "Portfolio of Jaswanth, an AI systems and full-stack product engineer building high-clarity digital experiences, applied intelligence, and ambitious software.",
+  keywords: ["Jaswanth", "AI Engineer", "Full Stack", "Next.js", "Portfolio", "Product Engineer"],
   authors: [{ name: "Jaswanth" }],
   openGraph: {
-    title: "Jaswanth | AI/ML & Full-Stack Developer",
-    description: "Personal portfolio of Jaswanth — AI/ML & Full-Stack Architect",
+    title: "Jaswanth | AI Systems & Product Engineer",
+    description: "A premium portfolio experience with advanced motion, product storytelling, and engineering depth.",
     type: "website",
   },
 };
@@ -28,8 +35,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={spaceGrotesk.variable}>
-      <body className="font-[var(--font-space-grotesk)] antialiased">
+    <html lang="en" suppressHydrationWarning className={`${sora.variable} ${marcellus.variable}`}>
+      <body suppressHydrationWarning className="antialiased">
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
       </body>
     </html>

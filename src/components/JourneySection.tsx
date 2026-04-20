@@ -4,54 +4,53 @@ import { motion, useInView } from "framer-motion";
 import SectionAmbient from "@/components/SectionAmbient";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Anchor, Code, Compass, FlaskConical, Rocket, Route, Trophy } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const milestones = [
   {
-    year: "Step 1",
-    title: "HTML Foundations",
-    description: "Started with HTML and understood how to structure web experiences from scratch.",
-    dotClass: "bg-[#f5c842] shadow-[0_0_14px_rgba(245,200,66,0.5)]",
-    chipClass: "text-[#f5c842] border-[#f5c842]/40 bg-[#f5c842]/10",
-    tag: "Origin",
+    phase: "Phase 01",
+    title: "Interface Fundamentals",
+    description: "Built early discipline in structure, semantics, and clean front-end composition.",
+    tag: "Dawn",
+    icon: Anchor,
   },
   {
-    year: "Step 2",
-    title: "Java Fundamentals",
-    description:
-      "Learned Java next and built strong logic, OOP thinking, and problem-solving discipline.",
-    dotClass: "bg-[#00d0ff] shadow-[0_0_14px_rgba(0,208,255,0.5)]",
-    chipClass: "text-[#00d0ff] border-[#00d0ff]/40 bg-[#00d0ff]/10",
-    tag: "Core",
+    phase: "Phase 02",
+    title: "Systems Thinking",
+    description: "Strengthened logic and architecture intuition through deeper language and backend exploration.",
+    tag: "Keel",
+    icon: Code,
   },
   {
-    year: "Step 3",
-    title: "JavaScript Momentum",
-    description:
-      "Moved into JavaScript to build dynamic apps and real interactive product flows.",
-    dotClass: "bg-[#a855f7] shadow-[0_0_14px_rgba(168,85,247,0.5)]",
-    chipClass: "text-[#a855f7] border-[#a855f7]/40 bg-[#a855f7]/10",
-    tag: "Shift",
+    phase: "Phase 03",
+    title: "Product Acceleration",
+    description: "Moved from isolated features to complete user journeys and full-stack ownership.",
+    tag: "Current",
+    icon: Rocket,
   },
   {
-    year: "Step 4",
-    title: "Idea Building Era",
-    description:
-      "Transitioned from coding features to building complete ideas and systems that solve real-world problems.",
-    dotClass: "bg-[#f5c842] shadow-[0_0_14px_rgba(245,200,66,0.5)]",
-    chipClass: "text-[#f5c842] border-[#f5c842]/40 bg-[#f5c842]/10",
-    tag: "Builder",
-    highlight: true,
+    phase: "Phase 04",
+    title: "AI-Integrated Execution",
+    description: "Shipped multi-domain applications with practical AI integration and measurable outcomes.",
+    tag: "Grand Line",
+    icon: Compass,
   },
   {
-    year: "Now",
-    title: "Present Core Skillset",
+    phase: "Phase 05",
+    title: "AICTE IDE Bootcamp Recognition",
     description:
-      "Main skill today: building the best ideas and leveling them up into top-quality products, with full-stack development as a core execution engine.",
-    dotClass: "bg-[#22c55e] shadow-[0_0_14px_rgba(34,197,94,0.5)]",
-    chipClass: "text-[#22c55e] border-[#22c55e]/40 bg-[#22c55e]/10",
-    tag: "ACTIVE",
+      "At AICTE IDE Bootcamp (Edition 3, Phase 1) in Puttaparthi, our team was recognized among 72 teams from 10+ states and awarded a Certificate of Appreciation for one of the best innovative idea pitches.",
+    tag: "Awarded",
+    icon: Trophy,
+  },
+  {
+    phase: "Now",
+    title: "Neuromorphic Frontier",
+    description: "Current team work explores event-driven intelligence and edge-oriented brain-inspired systems.",
+    tag: "Open Route",
+    icon: FlaskConical,
   },
 ];
 
@@ -61,25 +60,52 @@ export default function JourneySection() {
 
   useEffect(() => {
     if (!ref.current) return;
+
     const ctx = gsap.context(() => {
-      gsap.utils.toArray<HTMLElement>(".journey-3d-card").forEach((card, index) => {
+      gsap.fromTo(
+        ".journey-line-fill",
+        { scaleY: 0, transformOrigin: "top center" },
+        {
+          scaleY: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ref.current,
+            start: "top 68%",
+            end: "bottom 72%",
+            scrub: true,
+          },
+        }
+      );
+
+      gsap.utils.toArray<HTMLElement>(".journey-card").forEach((card, index) => {
         gsap.fromTo(
           card,
-          { opacity: 0, y: 70, rotateX: 14, z: -140 },
+          { opacity: 0, y: 76, rotateX: 10, filter: "blur(7px)" },
           {
             opacity: 1,
             y: 0,
             rotateX: 0,
-            z: 0,
-            duration: 0.95,
+            filter: "blur(0px)",
+            duration: 0.9,
             ease: "power3.out",
             delay: index * 0.05,
             scrollTrigger: {
               trigger: card,
-              start: "top 90%",
+              start: "top 88%",
             },
           }
         );
+      });
+
+      gsap.to(".journey-aside", {
+        yPercent: -10,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
       });
     }, ref);
 
@@ -87,107 +113,78 @@ export default function JourneySection() {
   }, []);
 
   return (
-    <section id="journey" ref={ref} className="relative overflow-hidden min-h-screen py-24 px-6 md:px-16 lg:px-24 bg-[#060f14]">
+    <section id="journey" ref={ref} className="site-section overflow-hidden">
       <SectionAmbient />
-      <div className="relative z-10 max-w-5xl mx-auto perspective-stage">
+
+      <div className="content-wrap relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-          className="mb-16"
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-12"
         >
-          <span className="inline-block px-4 py-1 bg-[#a855f7]/10 text-[#a855f7] text-xs font-bold rounded-full mb-4 border border-[#a855f7]/20 tracking-widest uppercase">
-            Log Book
-          </span>
-          <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-4">
-            The <span className="text-[#a855f7]">Journey</span>
+          <p className="section-kicker">Voyage Timeline</p>
+          <h2 className="section-title">
+            From first lines of code to <span className="text-[#3f769d]">strategic product craft</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-xl leading-relaxed">
-            From first markup to full product strategy — the journey from learning syntax to building impactful ideas.
+          <p className="section-copy max-w-[64ch]">
+            Each phase sharpened a different edge: structure, systems thinking, acceleration, and AI-led execution.
+            The route keeps evolving.
           </p>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.05, ease: [0.23, 1, 0.32, 1] }}
-          className="mb-12 grid grid-cols-1 md:grid-cols-2 gap-5"
-        >
-          <div className="glass-card depth-card journey-3d-card rounded-xl p-6 border border-[#f5c842]/20">
-            <p className="text-xs uppercase tracking-widest text-[#f5c842] mb-3">Highlighted Projects</p>
-            <ul className="text-sm text-gray-300 space-y-2">
-              <li>• Horizon AI v1 / v2</li>
-              <li>• Physiq-AI</li>
-              <li>• Luffy&apos;s King of Exams</li>
-              <li>• TripScraper.ai & Campus-SkillSwap</li>
-            </ul>
-          </div>
-          <div className="glass-card depth-card journey-3d-card rounded-xl p-6 border border-[#00d0ff]/20">
-            <p className="text-xs uppercase tracking-widest text-[#00d0ff] mb-3">Major Achievements</p>
-            <ul className="text-sm text-gray-300 space-y-2">
-              <li>• SIH 2025 Finalist (500+ teams)</li>
-              <li>• Multi-domain full-stack + AI portfolio</li>
-              <li>• Production-focused RAG and verification systems</li>
-              <li>• Team-building and idea-to-product execution</li>
-            </ul>
-          </div>
-        </motion.div>
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.78fr_1.22fr]">
+          <motion.aside
+            initial={{ opacity: 0, y: 24 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+            className="journey-aside map-card map-card-hover h-fit p-6 lg:sticky lg:top-24"
+          >
+            <p className="section-kicker">Current Heading</p>
+            <h3 className="mt-3 text-[1.7rem] leading-tight text-[#12263a]">Startup Track: Horizon AI</h3>
+            <p className="mt-4 text-sm leading-relaxed text-[#21405b]/82">
+              After bootcamp recognition, the next mission is converting Horizon AI into a startup-ready product with a
+              clear problem-solution fit, repeatable delivery model, and scalable implementation roadmap.
+            </p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
-          className="mb-16 premium-glass depth-card journey-3d-card rounded-xl p-6 border border-[#a855f7]/20"
-        >
-          <p className="text-xs uppercase tracking-widest text-[#a855f7] mb-3">Current Biggest Team Project</p>
-          <h3 className="text-2xl font-black text-white mb-3">Neuromorphic Computing & Engineering</h3>
-          <p className="text-sm text-gray-300 leading-relaxed">
-            We are actively building around neuromorphic computing using SNNs, event-driven intelligence, advanced chips, and frameworks like Lava/Nengo/SpikingJelly, with real-world focus on robotics, edge AI, and benchmarked performance using NeuroBench.
-          </p>
-        </motion.div>
+            <div className="mt-5 space-y-2 text-sm text-[#21405b]/84">
+              <p className="inline-flex items-center gap-2">
+                <Route className="h-4 w-4 text-[#3f769d]" aria-hidden="true" />
+                Opportunity to move from prototype to startup initiative
+              </p>
+              <p className="inline-flex items-center gap-2">
+                <Trophy className="h-4 w-4 text-[#3f769d]" aria-hidden="true" />
+                Guided by mentor Mr. Srikanth Kumar
+              </p>
+            </div>
 
-        <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-[26px] top-0 bottom-0 w-px bg-gradient-to-b from-[#f5c842]/60 via-[#00d0ff]/40 to-[#22c55e]/40 md:left-1/2 md:-translate-x-1/2" />
+            <div className="mt-6 flex flex-wrap gap-2">
+              <span className="chip">Bootcamp Winner Recognition</span>
+              <span className="chip">Startup Build: Active</span>
+            </div>
+          </motion.aside>
 
-          <div className="flex flex-col gap-10">
-            {milestones.map((m, i) => (
-              <motion.div
-                key={m.year}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.7, delay: i * 0.15, ease: [0.23, 1, 0.32, 1] }}
-                className={`relative flex gap-6 md:gap-0 ${
-                  i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                }`}
-              >
-                {/* Dot */}
-                <div
-                  className={`absolute left-0 top-5 w-[14px] h-[14px] rounded-full border-2 border-[#0a191f] z-10 shadow-lg md:left-1/2 md:-translate-x-1/2 ${m.dotClass}`}
-                />
+          <div className="relative">
+            <div className="absolute left-[14px] top-2 bottom-2 w-[2px] rounded-full bg-[#21405b]/12" />
+            <div className="journey-line-fill absolute left-[14px] top-2 bottom-2 w-[2px] origin-top rounded-full bg-gradient-to-b from-[#2d5e83] via-[#3f769d] to-[#ac7b2f]" />
 
-                {/* Card */}
-                <div className={`ml-10 md:ml-0 md:w-[46%] ${i % 2 === 0 ? "md:pr-10" : "md:pl-10"}`}>
-                  <div
-                    className={`glass-card depth-card journey-3d-card p-6 rounded-xl border transition-all ${
-                      m.highlight ? "border-[#f5c842]/40 shadow-[0_0_30px_rgba(245,200,66,0.1)]" : "border-white/5"
-                    }`}
-                  >
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className={`text-[10px] font-bold rounded-full px-3 py-1 border uppercase tracking-widest ${m.chipClass}`}>
-                        {m.tag}
-                      </span>
-                      <span className="text-xs font-mono text-gray-500">{m.year}</span>
-                    </div>
-                    <h3 className="text-xl font-black text-white mb-2">{m.title}</h3>
-                    <p className="text-gray-400 text-sm leading-relaxed">{m.description}</p>
+            <div className="space-y-5 pl-10">
+              {milestones.map((milestone) => (
+                <article key={milestone.title} className="journey-card map-card map-card-hover p-5">
+                  <div className="absolute -left-[30px] top-8 z-10 flex h-7 w-7 items-center justify-center rounded-full border border-[#21405b]/20 bg-[#f6f2e7] text-[#21405b] shadow-sm">
+                    <milestone.icon className="h-3.5 w-3.5" aria-hidden="true" />
                   </div>
-                </div>
 
-                {/* Spacer for opposite side */}
-                <div className="hidden md:block md:w-[46%]" />
-              </motion.div>
-            ))}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="chip !text-[10px]">{milestone.phase}</span>
+                    <span className="fan-mark">{milestone.tag}</span>
+                  </div>
+
+                  <h4 className="mt-3 text-[1.35rem] text-[#12263a]">{milestone.title}</h4>
+                  <p className="mt-2 text-sm leading-relaxed text-[#21405b]/82">{milestone.description}</p>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </div>
