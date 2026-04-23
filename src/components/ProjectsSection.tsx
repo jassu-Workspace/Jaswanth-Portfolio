@@ -74,6 +74,14 @@ const lanes: Lane[] = [
     chipClass: "!border-[#ac7b2f33] !text-[#ac7b2f]",
     projects: [
       {
+        title: "AuthentiTrace",
+        description:
+          "Multi-signal media authenticity verification platform that computes explainable trust scores and records every decision in a tamper-evident hash-chained ledger.",
+        stack: ["FastAPI", "SQLAlchemy", "SQLite", "Next.js 16", "React 19", "TypeScript"],
+        metrics: "5-signal weighted scoring with cryptographic audit trails",
+        link: "http://authenti-trace.vercel.app/",
+      },
+      {
         title: "Offline Zero-Shot ID Extraction",
         description:
           "Air-gapped extraction pipeline for identity cards using local inference orchestration and confidence scoring.",
@@ -352,6 +360,7 @@ export default function ProjectsSection() {
                     ["Horizon AI v2", "EdTech", "RAG + conversational guidance", "Role-aware learning pathways"],
                     ["Physiq-AI", "Health", "Nutrition intelligence", "Data-rich recommendation loops"],
                     ["TripScraper.ai", "Travel", "Plan generation", "Budget-aware itinerary design"],
+                    ["AuthentiTrace", "Media trust", "Multi-signal scoring + ledger", "Tamper-evident verification receipts"],
                     ["ID Extraction", "Verification", "Offline vision pipeline", "Air-gapped reliability"],
                   ].map((row) => (
                     <tr key={row[0]} className="border-b border-[#21405b]/8 text-sm text-[#21405b]/86">
