@@ -99,7 +99,7 @@ type HeroCanvasProps = {
 
 export default function HeroCanvas({ lowQuality = false }: HeroCanvasProps) {
   // Lower DPR and prefer low-power during intro/morph to maximize FPS
-  const dpr = lowQuality ? [0.6, 0.9] : [1, 1.5];
+  const dpr: [number, number] = lowQuality ? [0.6, 0.9] : [1, 1.5];
   const powerPreference = lowQuality ? "low-power" : "high-performance";
 
   return (
