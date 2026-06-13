@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useEffect, Suspense, lazy } from "react";
+import { useRef, useEffect, Suspense, lazy, useState, type PointerEvent } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Binoculars, Sparkles } from "lucide-react";
 import { gsap } from "gsap";
@@ -12,9 +12,32 @@ const HeroCanvas = lazy(() => import("./HeroCanvas"));
 
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const heroSignalRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
   const sharedMorphDuration = reduceMotion ? 0.2 : 1.28;
   const sharedMorphEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
+  const [lowQualityCanvas, setLowQualityCanvas] = useState(true);
+
+  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    const target = heroSignalRef.current;
+    if (!target) return;
+
+    const rect = target.getBoundingClientRect();
+    const x = event.clientX - (rect.left + rect.width / 2);
+    const y = event.clientY - (rect.top + rect.height / 2);
+    const rotationY = (x / (rect.width / 2)) * 12;
+    const rotationX = -(y / (rect.height / 2)) * 10;
+
+    target.style.setProperty("--hero-card-rotate-x", `${rotationX}deg`);
+    target.style.setProperty("--hero-card-rotate-y", `${rotationY}deg`);
+  };
+
+  const resetHeroSignal = () => {
+    const target = heroSignalRef.current;
+    if (!target) return;
+    target.style.setProperty("--hero-card-rotate-x", "0deg");
+    target.style.setProperty("--hero-card-rotate-y", "0deg");
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -33,6 +56,7 @@ export default function HeroSection() {
 
       gsap.to(".hero-parallax-bg", {
         yPercent: 18,
+        scale: 1.035,
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -54,7 +78,9 @@ export default function HeroSection() {
       });
 
       gsap.to(".hero-signal", {
-        xPercent: -10,
+        xPercent: -6,
+        rotateY: 5,
+        rotateX: -3,
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -68,6 +94,20 @@ export default function HeroSection() {
     return () => ctx.revert();
   }, []);
 
+  useEffect(() => {
+    // Keep canvas in low-quality mode until intro completes/finishes morph
+    const onIntroComplete = () => {
+      // keep low-quality on for a short window around the morph
+      setLowQualityCanvas(true);
+      window.setTimeout(() => setLowQualityCanvas(false), 700);
+    };
+
+    // while intro is present we want reduced canvas quality
+    setLowQualityCanvas(true);
+    window.addEventListener("intro:complete", onIntroComplete);
+    return () => window.removeEventListener("intro:complete", onIntroComplete);
+  }, []);
+
   return (
     <section
       id="hero"
@@ -78,7 +118,7 @@ export default function HeroSection() {
 
       <div className="hero-parallax-bg absolute inset-0 z-0 opacity-80">
         <Suspense fallback={null}>
-          <HeroCanvas />
+          <HeroCanvas lowQuality={lowQualityCanvas} />
         </Suspense>
       </div>
 
@@ -91,11 +131,13 @@ export default function HeroSection() {
             <motion.p
               layoutId="shared-role-line"
               className="hero-stagger section-kicker"
+              style={{ willChange: "transform, opacity" }}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{
-                layout: {
-                  duration: sharedMorphDuration,
-                  ease: sharedMorphEase,
-                },
+                duration: 0.6,
+                ease: sharedMorphEase,
+                layout: { duration: sharedMorphDuration, ease: sharedMorphEase },
               }}
             >
               AI Systems | Full-Stack Product Engineering
@@ -103,11 +145,13 @@ export default function HeroSection() {
             <motion.h1
               layoutId="jaswanth-name"
               className="hero-stagger morph-name-shared text-depth-main mt-5 text-[clamp(3.2rem,10vw,7.5rem)] leading-[0.92] text-[#0e1d2b]"
+              style={{ willChange: "transform, opacity" }}
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{
-                layout: {
-                  duration: sharedMorphDuration,
-                  ease: sharedMorphEase,
-                },
+                duration: 0.65,
+                ease: sharedMorphEase,
+                layout: { duration: sharedMorphDuration, ease: sharedMorphEase },
               }}
             >
               Jaswanth
@@ -131,11 +175,13 @@ export default function HeroSection() {
               <motion.span
                 layoutId="shared-startup-chip"
                 className="chip"
+                style={{ willChange: "transform, opacity" }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{
-                  layout: {
-                    duration: sharedMorphDuration,
-                    ease: sharedMorphEase,
-                  },
+                  duration: 0.5,
+                  ease: sharedMorphEase,
+                  layout: { duration: sharedMorphDuration, ease: sharedMorphEase },
                 }}
               >
                 Startup Opportunity: Horizon AI
@@ -169,7 +215,12 @@ export default function HeroSection() {
             </div>
           </div>
 
-          <div className="hero-signal hero-stagger relative">
+          <div
+            ref={heroSignalRef}
+            onPointerMove={handlePointerMove}
+            onPointerLeave={resetHeroSignal}
+            className="hero-signal hero-stagger relative"
+          >
             <div className="map-card map-card-hover p-6 md:p-7">
               <div className="mb-5 flex items-center justify-between">
                 <p className="section-kicker !text-[0.62rem]">Navigation Brief</p>

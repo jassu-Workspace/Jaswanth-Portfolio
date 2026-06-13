@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Compass, Sparkles, Waves } from "lucide-react";
 
-const INTRO_DURATION_MS = 3000;
-const REDUCED_INTRO_DURATION_MS = 520;
+const INTRO_DURATION_MS = 5000;
+const REDUCED_INTRO_DURATION_MS = 1400;
 const SHARED_MORPH_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 export default function IntroOverlay() {
@@ -68,10 +68,13 @@ export default function IntroOverlay() {
 
           <motion.div
             className="intro-content"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: reduceMotion ? 0.25 : 0.7, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, y: 24, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: reduceMotion ? 0.25 : 0.72, ease: [0.22, 1, 0.36, 1] }}
           >
+            <div className="intro-ring" aria-hidden="true">
+              <div className="intro-ring-inner" />
+            </div>
             <motion.p
               className="intro-kicker"
               initial={{ opacity: 0, y: 10 }}
@@ -93,14 +96,15 @@ export default function IntroOverlay() {
             <motion.div
               layoutId="vivre-signal-dial"
               className="intro-vivre-dial relative mx-auto mt-1 flex h-[108px] w-[108px] items-center justify-center"
+              style={{ willChange: "transform, opacity" }}
               initial={{ opacity: 0, scale: 0.78, rotate: -10 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               transition={{
-                duration: reduceMotion ? 0.2 : 0.72,
+                duration: reduceMotion ? 0.2 : 0.6,
                 delay: reduceMotion ? 0 : 0.16,
                 ease: SHARED_MORPH_EASE,
                 layout: {
-                  duration: sharedMorphDuration,
+                  duration: reduceMotion ? 0.12 : 0.6,
                   ease: SHARED_MORPH_EASE,
                 },
               }}
@@ -123,13 +127,14 @@ export default function IntroOverlay() {
             <motion.h1
               layoutId="jaswanth-name"
               className="intro-title morph-name-shared"
+              style={{ willChange: "transform, opacity" }}
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
                 duration: reduceMotion ? 0.2 : 0.6,
                 delay: reduceMotion ? 0 : 0.24,
                 layout: {
-                  duration: sharedMorphDuration,
+                  duration: reduceMotion ? 0.12 : 0.6,
                   ease: SHARED_MORPH_EASE,
                 },
               }}
@@ -140,13 +145,14 @@ export default function IntroOverlay() {
             <motion.p
               layoutId="shared-role-line"
               className="intro-subtitle"
+              style={{ willChange: "transform, opacity" }}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
                 duration: reduceMotion ? 0.2 : 0.5,
                 delay: reduceMotion ? 0 : 0.34,
                 layout: {
-                  duration: sharedMorphDuration,
+                  duration: reduceMotion ? 0.12 : 0.5,
                   ease: SHARED_MORPH_EASE,
                 },
               }}
@@ -199,9 +205,12 @@ export default function IntroOverlay() {
               <motion.span
                 layoutId="shared-startup-chip"
                 className="intro-badge"
+                style={{ willChange: "transform, opacity" }}
                 transition={{
+                  duration: reduceMotion ? 0.2 : 0.45,
+                  ease: SHARED_MORPH_EASE,
                   layout: {
-                    duration: sharedMorphDuration,
+                    duration: reduceMotion ? 0.12 : 0.45,
                     ease: SHARED_MORPH_EASE,
                   },
                 }}

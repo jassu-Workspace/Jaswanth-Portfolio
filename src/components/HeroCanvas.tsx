@@ -3,7 +3,7 @@ import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
-function DriftParticles({ count = 140 }: { count?: number }) {
+function DriftParticles({ count = 140, lowQuality = false }: { count?: number; lowQuality?: boolean }) {
   const meshRef = useRef<THREE.Points>(null);
 
   const [positions, colors] = useMemo(() => {
@@ -24,8 +24,11 @@ function DriftParticles({ count = 140 }: { count?: number }) {
 
   useFrame((state) => {
     if (!meshRef.current) return;
-    meshRef.current.rotation.y = state.clock.elapsedTime * 0.02;
-    meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.08) * 0.03;
+    const t = state.clock.elapsedTime;
+    const speedY = lowQuality ? 0.008 : 0.02;
+    const speedX = lowQuality ? 0.02 : 0.08;
+    meshRef.current.rotation.y = t * speedY;
+    meshRef.current.rotation.x = Math.sin(t * speedX) * (lowQuality ? 0.01 : 0.03);
   });
 
   return (
@@ -39,17 +42,17 @@ function DriftParticles({ count = 140 }: { count?: number }) {
   );
 }
 
-function RouteRings() {
+function RouteRings({ lowQuality = false }: { lowQuality?: boolean }) {
   const outerRef = useRef<THREE.Mesh>(null);
   const innerRef = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
     if (outerRef.current) {
-      outerRef.current.rotation.z = state.clock.elapsedTime * 0.08;
+      outerRef.current.rotation.z = state.clock.elapsedTime * (lowQuality ? 0.02 : 0.08);
     }
 
     if (innerRef.current) {
-      innerRef.current.rotation.z = -state.clock.elapsedTime * 0.14;
+      innerRef.current.rotation.z = -state.clock.elapsedTime * (lowQuality ? 0.04 : 0.14);
     }
   });
 
@@ -68,12 +71,12 @@ function RouteRings() {
   );
 }
 
-function CrossLines() {
+function CrossLines({ lowQuality = false }: { lowQuality?: boolean }) {
   const linesRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
     if (!linesRef.current) return;
-    linesRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.2) * 0.08;
+    linesRef.current.rotation.z = Math.sin(state.clock.elapsedTime * (lowQuality ? 0.08 : 0.2)) * (lowQuality ? 0.02 : 0.08);
   });
 
   return (
@@ -90,18 +93,26 @@ function CrossLines() {
   );
 }
 
-export default function HeroCanvas() {
+type HeroCanvasProps = {
+  lowQuality?: boolean;
+};
+
+export default function HeroCanvas({ lowQuality = false }: HeroCanvasProps) {
+  // Lower DPR and prefer low-power during intro/morph to maximize FPS
+  const dpr = lowQuality ? [0.6, 0.9] : [1, 1.5];
+  const powerPreference = lowQuality ? "low-power" : "high-performance";
+
   return (
     <Canvas
       camera={{ position: [0, 0, 9], fov: 62 }}
-      dpr={[1, 1.5]}
-      gl={{ antialias: false, powerPreference: "low-power" }}
-      style={{ width: "100%", height: "100%" }}
+      dpr={dpr}
+      gl={{ antialias: false, powerPreference }}
+      style={{ width: "100%", height: "100%", willChange: "transform" }}
     >
       <ambientLight intensity={0.46} />
-      <DriftParticles count={150} />
-      <RouteRings />
-      <CrossLines />
+      <DriftParticles count={lowQuality ? 60 : 150} lowQuality={lowQuality} />
+      <RouteRings lowQuality={lowQuality} />
+      <CrossLines lowQuality={lowQuality} />
       <fog attach="fog" args={["#efe5d0", 12, 34]} />
     </Canvas>
   );

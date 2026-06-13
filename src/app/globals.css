@@ -99,6 +99,8 @@ html.lenis body {
 .site-shell {
   position: relative;
   isolation: isolate;
+  perspective: 1600px;
+  perspective-origin: center top;
 }
 
 .site-shell::before {
@@ -211,17 +213,28 @@ html.lenis body {
 
 .intro-overlay {
   position: fixed;
-  inset: 0;
-  z-index: 220;
-  display: grid;
-  place-items: center;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
   overflow: hidden;
   color: #12263a;
   background:
-    radial-gradient(circle at 12% 8%, rgba(95, 153, 188, 0.26), rgba(95, 153, 188, 0) 34%),
-    radial-gradient(circle at 90% 16%, rgba(208, 103, 82, 0.22), rgba(208, 103, 82, 0) 40%),
-    radial-gradient(circle at 50% 100%, rgba(172, 123, 47, 0.12), rgba(172, 123, 47, 0) 52%),
-    linear-gradient(170deg, #fdf9f1 0%, #f4ebd8 54%, #efe4cd 100%);
+    radial-gradient(circle at 16% 14%, rgba(95, 153, 188, 0.38), rgba(95, 153, 188, 0) 32%),
+    radial-gradient(circle at 88% 18%, rgba(208, 103, 82, 0.34), rgba(208, 103, 82, 0) 38%),
+    radial-gradient(circle at 52% 92%, rgba(172, 123, 47, 0.16), rgba(172, 123, 47, 0) 48%),
+    linear-gradient(170deg, #fffaf5 0%, #f4ede2 44%, #eee5d3 100%);
+  backdrop-filter: blur(12px);
+}
+
+.intro-content {
+  margin: 0 auto;
 }
 
 .intro-overlay::after {
@@ -289,12 +302,32 @@ html.lenis body {
   border: 1px solid rgba(18, 38, 58, 0.16);
   padding: clamp(1.2rem, 3.2vw, 2.3rem);
   text-align: center;
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.74), rgba(246, 240, 225, 0.62));
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.88), rgba(246, 240, 225, 0.64));
   box-shadow:
     0 42px 62px -48px rgba(14, 29, 43, 0.56),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  overflow: hidden;
+}
+
+.intro-ring {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.intro-ring-inner {
+  width: 170px;
+  height: 170px;
+  border-radius: 100%;
+  border: 1px solid rgba(95, 153, 188, 0.24);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.24),
+    0 0 60px rgba(95, 153, 188, 0.16);
+  animation: intro-ring-pulse 5s ease-in-out infinite;
 }
 
 .intro-kicker {
@@ -362,6 +395,19 @@ html.lenis body {
   text-shadow:
     0 1px 0 rgba(255, 255, 255, 0.78),
     0 16px 30px rgba(14, 29, 43, 0.26);
+}
+
+@keyframes intro-ring-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.82;
+  }
+
+  50% {
+    transform: scale(1.08);
+    opacity: 0.6;
+  }
 }
 
 .intro-subtitle {
@@ -459,6 +505,7 @@ html.lenis body {
 .content-wrap {
   width: min(var(--max-content), calc(100% - 2.5rem));
   margin-inline: auto;
+  transform-style: preserve-3d;
 }
 
 .section-kicker {
@@ -509,6 +556,7 @@ html.lenis body {
 
 .hero-parallax-bg,
 .hero-depth-layer,
+.hero-signal,
 .section-ambient-grid,
 .section-ambient-glow,
 .section-ambient-points,
@@ -524,6 +572,22 @@ html.lenis body {
   will-change: transform, opacity;
 }
 
+.hero-signal {
+  perspective: 1800px;
+  perspective-origin: center;
+}
+
+.hero-signal .map-card {
+  transform-style: preserve-3d;
+  transform: rotateX(var(--hero-card-rotate-x, 0deg)) rotateY(var(--hero-card-rotate-y, 0deg));
+  transition: transform 220ms var(--ease-smooth);
+}
+
+.hero-signal .map-card-hover:hover,
+.hero-signal .map-card-hover:focus-within {
+  transform: rotateX(var(--hero-card-rotate-x, 0deg)) rotateY(var(--hero-card-rotate-y, 0deg));
+}
+
 .map-card {
   position: relative;
   overflow: hidden;
@@ -535,6 +599,8 @@ html.lenis body {
     inset 0 1px 0 rgba(255, 255, 255, 0.62);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
 }
 
 .map-card::after {
@@ -556,13 +622,34 @@ html.lenis body {
 }
 
 .map-card-hover {
-  transition: transform 320ms var(--ease-smooth), border-color 240ms ease;
+  transition: transform 320ms var(--ease-smooth), border-color 240ms ease, box-shadow 260ms ease;
 }
 
 .map-card-hover:hover,
 .map-card-hover:focus-within {
-  transform: translateY(-6px);
+  transform: translateY(-8px) rotateX(0.35deg) scale(1.0025);
   border-color: rgba(45, 94, 131, 0.36);
+  box-shadow:
+    0 40px 60px -38px rgba(14, 29, 43, 0.58),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.map-card-hover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.22), transparent 28%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.14), transparent 22%);
+  opacity: 0.85;
+  transition: opacity 300ms var(--ease-smooth), transform 300ms var(--ease-smooth);
+  transform: translateZ(0) scale(0.98);
+}
+
+.map-card-hover:hover::before,
+.map-card-hover:focus-within::before {
+  opacity: 1;
+  transform: translateZ(0) scale(1);
 }
 
 .chip {
@@ -663,28 +750,31 @@ html.lenis body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
-  font-size: 0.73rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: rgba(18, 38, 58, 0.82);
-}
+    gap: 0.75rem;
+    min-width: 0;
+    font-size: 0.73rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(18, 38, 58, 0.82);
+  }
 
-.contact-channel-value {
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-transform: none;
-  letter-spacing: 0;
-  color: var(--ink-900);
-}
+  .contact-channel > span:first-child {
+    flex-shrink: 0;
+  }
 
-.section-ambient {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  pointer-events: none;
-}
+  .contact-channel-value {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--ink-900);
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: right;
+  }
 
 .section-ambient-grid {
   position: absolute;
@@ -929,8 +1019,8 @@ html.lenis body {
   }
 
   .contact-channel {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
   }
 }
 

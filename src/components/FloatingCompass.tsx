@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Compass, Navigation, Waves } from "lucide-react";
 
 const SHARED_MORPH_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -18,6 +18,9 @@ export default function FloatingCompass() {
   const [rotation, setRotation] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isScrewing, setIsScrewing] = useState(false);
+
+  const reduceMotion = useReducedMotion();
+  const sharedMorphDuration = reduceMotion ? 0.2 : 0.6;
 
   useEffect(() => {
     const onScroll = () => {
@@ -68,10 +71,9 @@ export default function FloatingCompass() {
           layoutId="vivre-signal-dial"
           className="relative mx-auto flex h-24 w-24 items-center justify-center"
           transition={{
-            layout: {
-              duration: 1.28,
-              ease: SHARED_MORPH_EASE,
-            },
+            duration: 0.65,
+            ease: SHARED_MORPH_EASE,
+            layout: { duration: sharedMorphDuration, ease: SHARED_MORPH_EASE },
           }}
         >
           <div className="compass-ring-anim absolute inset-0 rounded-full border border-dashed border-[#3f769d]/45" />
