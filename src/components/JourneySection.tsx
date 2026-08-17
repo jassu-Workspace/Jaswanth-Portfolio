@@ -46,6 +46,14 @@ const milestones = [
     icon: Trophy,
   },
   {
+    phase: "Phase 06",
+    title: "Full Stack Engineer @ Indus Network",
+    description:
+      "An 8-month voyage of professional growth at a Canadian-based firm. From initial capability trials to full-stack ownership, this chapter redefined my limits and accelerated my technical craft under visionary leadership.",
+    tag: "Completed",
+    icon: Rocket,
+  },
+  {
     phase: "Now",
     title: "Neuromorphic Frontier",
     description: "Current team work explores event-driven intelligence and edge-oriented brain-inspired systems.",

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaswanth Sri Sai Venkat Dangeti - Resume</title>
+    <style>
+        /* Google Standard / Minimalist Resume Styling */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            color: #202124;
+            line-height: 1.4;
+            font-size: 11pt; /* Optimal for fitting content while maintaining readability */
+            background: #fff;
+            padding: 40px;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #dadce0;
+            padding-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 24pt;
+            font-weight: 700;
+            color: #202124;
+            margin-bottom: 5px;
+            letter-spacing: -0.5px;
+        }
+
+        .contact-info {
+            font-size: 10pt;
+            color: #5f6368;
+        }
+        
+        .contact-info a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 18px;
+        }
+
+        h2 {
+            font-size: 13pt;
+            font-weight: 700;
+            color: #1a73e8; /* Subtle Google Blue */
+            text-transform: uppercase;
+            border-bottom: 1px solid #dadce0;
+            padding-bottom: 4px;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Project / Experience Items */
+        .item {
+            margin-bottom: 12px;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+
+        .item-title {
+            font-weight: 700;
+            font-size: 11.5pt;
+        }
+
+        .item-subtitle {
+            font-weight: 500;
+            font-style: italic;
+            color: #5f6368;
+            font-size: 10.5pt;
+        }
+
+        .item-date {
+            font-size: 10pt;
+            color: #5f6368;
+            font-weight: 500;
+        }
+
+        /* Lists */
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 4px;
+            font-size: 10.5pt;
+        }
+
+        /* Skills */
+        .skills-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 20px;
+        }
+
+        .skill-group {
+            margin-bottom: 4px;
+        }
+        
+        .skill-title {
+            font-weight: 700;
+            font-size: 10.5pt;
+        }
+
+        /* Print Media Query */
+        @media print {
+            body {
+                padding: 0;
+                margin: 0;
+            }
+            @page {
+                margin: 0.5in;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Jaswanth Sri Sai Venkat Dangeti</h1>
+        <div class="contact-info">
+            Visakhapatnam, India • 
+            <a href="mailto:jaswanthsrisai0011@gmail.com">jaswanthsrisai0011@gmail.com</a> • 
+            <a href="https://www.linkedin.com/in/jaswanth-sri-sai-venkat-dangeti-639aa9348/" target="_blank">LinkedIn</a> • 
+            <a href="https://github.com/jassu-Workspace" target="_blank">GitHub</a>
+        </div>
+    </header>
+
+    <section>
+        <h2>Summary</h2>
+        <p style="font-size: 10.5pt; text-align: justify;">
+            AI Systems and Full-Stack Product Engineer focused on building ambitious, dependable software. Proven ability to combine thoughtful interaction design with practical AI capability. Specializes in RAG platforms, verification workflows, and performant user-facing applications. Recognized as an SIH 2025 Finalist and AICTE IDE Bootcamp Awardee.
+        </p>
+    </section>
+
+    <section>
+        <h2>Technical Skills</h2>
+        <div class="skills-container">
+            <div class="skill-group">
+                <span class="skill-title">Languages & Frameworks:</span> TypeScript, JavaScript, Python, React 19, Next.js 16, Node.js
+            </div>
+            <div class="skill-group">
+                <span class="skill-title">AI & Intelligence:</span> Gemini, DeepSeek, Ollama, RAG pipelines, FAISS, Computer Vision, OpenCV
+            </div>
+            <div class="skill-group">
+                <span class="skill-title">Backend & Database:</span> Supabase, Firebase, PostgreSQL, Redis, FastAPI, SQLAlchemy, SQLite
+            </div>
+            <div class="skill-group">
+                <span class="skill-title">Tools & Deployment:</span> Git, CI/CD, Vercel, BullMQ, Testing Libraries
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Engineering Projects & Achievements</h2>
+
+        <div class="item">
+            <div class="item-header">
+                <span class="item-title">Horizon AI (v1 & v2)</span>
+                <span class="item-subtitle">SIH 2025 Finalist | AICTE IDE Bootcamp Awardee</span>
+            </div>
+            <ul>
+                <li>Architected a serverless career navigation platform delivering 10-week adaptive roadmaps using RAG-backed learning paths and PDF resume interpretation.</li>
+                <li>Developed robust offline OCR verification and biometric-assisted trust mechanisms for scholarship readiness, leading to selection as a finalist from over 500 competing teams.</li>
+                <li>Integrated role-aware dashboards and AI tutor workflows using React, Node.js, Supabase, and FAISS.</li>
+            </ul>
+        </div>
+
+        <div class="item">
+            <div class="item-header">
+                <span class="item-title">AuthentiTrace</span>
+                <span class="item-subtitle">Media Authenticity Platform</span>
+            </div>
+            <ul>
+                <li>Engineered a multi-signal media verification platform that computes explainable trust scores to combat digital misinformation.</li>
+                <li>Implemented a tamper-evident, hash-chained ledger using SQLite and SQLAlchemy to securely record every verification decision.</li>
+                <li>Built a high-performance frontend using Next.js 16 and React 19, backed by a FastAPI microservice architecture.</li>
+            </ul>
+        </div>
+
+        <div class="item">
+            <div class="item-header">
+                <span class="item-title">Offline Zero-Shot ID Extraction</span>
+                <span class="item-subtitle">Air-gapped AI Pipeline</span>
+            </div>
+            <ul>
+                <li>Designed an air-gapped data extraction pipeline for identity cards, prioritizing offline-first reliability and data privacy.</li>
+                <li>Orchestrated local AI inference utilizing Ollama and OpenCV, executing zero-shot extraction with deterministic confidence scoring.</li>
+                <li>Scaled background processing and task orchestration using Redis and BullMQ within a Node.js and FastAPI environment.</li>
+            </ul>
+        </div>
+
+        <div class="item">
+            <div class="item-header">
+                <span class="item-title">TripScraper.ai</span>
+                <span class="item-subtitle">AI Itinerary Planner</span>
+            </div>
+            <ul>
+                <li>Developed an AI-first travel planner that dynamically balances budget constraints, travel intent, and route quality.</li>
+                <li>Leveraged Gemini 2.5 Flash to process user criteria and generate guided, multi-step travel itineraries.</li>
+                <li>Integrated Recharts for budget visualization and implemented automated PDF export functionality for offline access.</li>
+            </ul>
+        </div>
+
+        <div class="item">
+            <div class="item-header">
+                <span class="item-title">Physiq-AI</span>
+                <span class="item-subtitle">Health & Nutrition System</span>
+            </div>
+            <ul>
+                <li>Created a comprehensive nutrition and fitness platform supporting personalized macro coaching and automated check-ins.</li>
+                <li>Processed and modeled complex datasets containing over 12,228 food items and 1,000+ exercise references for precise AI guidance.</li>
+                <li>Built responsive data visualization dashboards using React 19 and Firebase.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>Education</h2>
+        <div class="item">
+            <div class="item-header">
+                <span class="item-title">[Your University / College Name Here]</span>
+                <span class="item-date">[Graduation Month, Year]</span>
+            </div>
+            <div class="item-subtitle">[Your Degree e.g., Bachelor of Technology in Computer Science]</div>
+            <ul>
+                <li><strong>Relevant Coursework:</strong> Data Structures, Algorithms, Artificial Intelligence, Database Management Systems.</li>
+                <li><strong>GPA:</strong> [Your GPA/CGPA]</li>
+            </ul>
+        </div>
+    </section>
+
+</body>
+</html>
