@@ -89,11 +89,12 @@ const lanes: Lane[] = [
         metrics: "Offline-first reliability with queue-based scaling",
       },
       {
-        title: "DL Verification System",
+        title: "Komute DL Verification",
         description:
-          "Microservice verification architecture with image processing, OCR, and one-command startup for rapid ops alignment.",
-        stack: ["Python", "Node.js", "React", "Face API", "Microservices"],
-        metrics: "Designed for quick operational rollout",
+          "High-security driving license verification module co-developed with Prasanth Badda during my internship at Indus Network LLC. Features multiple authentication layers.",
+        stack: ["Python", "Node.js", "React", "Face API", "Security Layers"],
+        metrics: "Critical security module for Komute.org",
+        link: "https://komute.org/",
       },
     ],
   },
@@ -362,6 +363,7 @@ export default function ProjectsSection() {
                     ["TripScraper.ai", "Travel", "Plan generation", "Budget-aware itinerary design"],
                     ["AuthentiTrace", "Media trust", "Multi-signal scoring + ledger", "Tamper-evident verification receipts"],
                     ["ID Extraction", "Verification", "Offline vision pipeline", "Air-gapped reliability"],
+                    ["Komute DL", "Verification", "Multi-layer Security", "High-security license verification"],
                   ].map((row) => (
                     <tr key={row[0]} className="border-b border-[#21405b]/8 text-sm text-[#21405b]/86">
                       <td className="px-4 py-3 font-semibold text-[#12263a]">{row[0]}</td>

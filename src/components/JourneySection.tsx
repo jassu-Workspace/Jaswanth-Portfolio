@@ -47,10 +47,13 @@ const milestones = [
   },
   {
     phase: "Phase 06",
-    title: "Full Stack Engineer @ Indus Network",
-    description:
-      "An 8-month voyage of professional growth at a Canadian-based firm. From initial capability trials to full-stack ownership, this chapter redefined my limits and accelerated my technical craft under visionary leadership.",
-    tag: "Completed",
+    title: "Full Stack Engineer Intern @ Indus Network LLC",
+    description: (
+      <>
+        Currently interning at <a href="https://www.linkedin.com/company/indus-network-llc/home/" target="_blank" rel="noreferrer" className="text-[#3f769d] hover:underline font-medium">Indus Network LLC</a>. A voyage of professional growth where I co-developed a critical, multi-layered driving license verification system for <a href="https://komute.org/" target="_blank" rel="noreferrer" className="text-[#3f769d] hover:underline font-medium">Komute.org</a> alongside Prasanth Badda.
+      </>
+    ),
+    tag: "Active Internship",
     icon: Rocket,
   },
   {
