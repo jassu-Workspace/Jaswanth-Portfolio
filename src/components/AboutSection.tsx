@@ -59,12 +59,10 @@ export default function AboutSection() {
       gsap.utils.toArray<HTMLElement>(".about-card").forEach((card, index) => {
         gsap.fromTo(
           card,
-          { opacity: 0, y: 70, rotateX: 9, filter: "blur(6px)" },
+          { opacity: 0, y: 40 },
           {
             opacity: 1,
             y: 0,
-            rotateX: 0,
-            filter: "blur(0px)",
             duration: 0.85,
             ease: "power3.out",
             delay: index * 0.05,

@@ -91,12 +91,10 @@ export default function JourneySection() {
       gsap.utils.toArray<HTMLElement>(".journey-card").forEach((card, index) => {
         gsap.fromTo(
           card,
-          { opacity: 0, y: 76, rotateX: 10, filter: "blur(7px)" },
+          { opacity: 0, y: 40 },
           {
             opacity: 1,
             y: 0,
-            rotateX: 0,
-            filter: "blur(0px)",
             duration: 0.9,
             ease: "power3.out",
             delay: index * 0.05,

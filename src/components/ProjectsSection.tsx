@@ -157,12 +157,10 @@ export default function ProjectsSection() {
       gsap.utils.toArray<HTMLElement>(".project-card").forEach((card, index) => {
         gsap.fromTo(
           card,
-          { opacity: 0, y: 90, rotateX: 12, filter: "blur(7px)" },
+          { opacity: 0, y: 40 },
           {
             opacity: 1,
             y: 0,
-            rotateX: 0,
-            filter: "blur(0px)",
             duration: 1.05,
             ease: "power3.out",
             delay: index * 0.04,

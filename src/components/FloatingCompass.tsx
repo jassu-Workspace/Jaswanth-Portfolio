@@ -23,26 +23,36 @@ export default function FloatingCompass() {
   const sharedMorphDuration = reduceMotion ? 0.2 : 0.6;
 
   useEffect(() => {
+    let rafId = 0;
     const onScroll = () => {
-      const scrollPos = window.scrollY;
-      const viewH = window.innerHeight;
-      const totalH = document.documentElement.scrollHeight - viewH;
-      const safeTotal = totalH <= 0 ? 1 : totalH;
-      const ratio = Math.min(Math.max(scrollPos / safeTotal, 0), 1);
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        const scrollPos = window.scrollY;
+        const viewH = window.innerHeight;
+        const totalH = document.documentElement.scrollHeight - viewH;
+        const safeTotal = totalH <= 0 ? 1 : totalH;
+        const ratio = Math.min(Math.max(scrollPos / safeTotal, 0), 1);
 
-      setRotation(ratio * 1080);
-      setProgress(ratio);
+        setRotation(ratio * 1080);
+        setProgress(ratio);
 
-      const idx = Math.min(
-        Math.floor(ratio * sections.length),
-        sections.length - 1
-      );
-      setStatus(sections[idx]?.label ?? sections[0].label);
+        const idx = Math.min(
+          Math.floor(ratio * sections.length),
+          sections.length - 1
+        );
+        setStatus(sections[idx]?.label ?? sections[0].label);
+        rafId = 0;
+      });
     };
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   useEffect(() => {

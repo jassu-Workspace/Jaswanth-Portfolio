@@ -70,12 +70,10 @@ export default function ArsenalSection() {
       gsap.utils.toArray<HTMLElement>(".arsenal-card").forEach((card, index) => {
         gsap.fromTo(
           card,
-          { opacity: 0, y: 80, rotateX: 10, filter: "blur(8px)" },
+          { opacity: 0, y: 40 },
           {
             opacity: 1,
             y: 0,
-            rotateX: 0,
-            filter: "blur(0px)",
             duration: 0.95,
             ease: "power3.out",
             delay: index * 0.06,

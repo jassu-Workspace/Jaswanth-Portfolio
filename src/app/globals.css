@@ -38,13 +38,9 @@ body {
   color: var(--ink-950);
   background:
     radial-gradient(circle at 10% 0%, rgba(212, 103, 82, 0.16), transparent 38%),
-    radial-gradient(circle at 100% 15%, rgba(95, 153, 188, 0.24), transparent 44%),
     linear-gradient(180deg, #f9f6ef 0%, #efe5d0 52%, #ecdfc7 100%);
-  background-attachment: fixed;
   font-family: var(--font-sora), "Segoe UI", sans-serif;
   overflow-x: hidden;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
 }
 
 h1,
@@ -99,8 +95,6 @@ html.lenis body {
 .site-shell {
   position: relative;
   isolation: isolate;
-  perspective: 1600px;
-  perspective-origin: center top;
 }
 
 .site-shell::before {
@@ -148,8 +142,8 @@ html.lenis body {
   aspect-ratio: 1;
   top: -20vmax;
   left: -18vmax;
-  background: radial-gradient(circle, rgba(95, 153, 188, 0.58), rgba(95, 153, 188, 0));
-  animation: global-wave-float 20s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(95, 153, 188, 0.4), rgba(95, 153, 188, 0));
+  animation: global-wave-float 24s ease-in-out infinite;
 }
 
 .global-wave-b {
@@ -157,8 +151,8 @@ html.lenis body {
   aspect-ratio: 1;
   bottom: -22vmax;
   right: -14vmax;
-  background: radial-gradient(circle, rgba(208, 103, 82, 0.52), rgba(208, 103, 82, 0));
-  animation: global-wave-float 24s ease-in-out infinite reverse;
+  background: radial-gradient(circle, rgba(208, 103, 82, 0.32), rgba(208, 103, 82, 0));
+  animation: global-wave-float 28s ease-in-out infinite reverse;
 }
 
 .global-wave-c {
@@ -166,18 +160,18 @@ html.lenis body {
   aspect-ratio: 1;
   top: 42%;
   right: 10%;
-  opacity: 0.12;
-  background: radial-gradient(circle, rgba(172, 123, 47, 0.55), rgba(172, 123, 47, 0));
-  animation: global-wave-float 22s ease-in-out infinite;
+  opacity: 0.08;
+  background: radial-gradient(circle, rgba(172, 123, 47, 0.35), rgba(172, 123, 47, 0));
+  animation: global-wave-float 26s ease-in-out infinite;
 }
 
 .global-drift-points {
   position: absolute;
   inset: -20%;
-  opacity: 0.065;
-  background-image: radial-gradient(circle, rgba(18, 38, 58, 0.72) 1px, transparent 1px);
-  background-size: 30px 30px;
-  animation: drift-points 42s linear infinite;
+  opacity: 0.04;
+  background-image: radial-gradient(circle, rgba(18, 38, 58, 0.5) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: drift-points 60s linear infinite;
 }
 
 .global-ring {
@@ -306,8 +300,6 @@ html.lenis body {
   box-shadow:
     0 42px 62px -48px rgba(14, 29, 43, 0.56),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
   overflow: hidden;
 }
 
@@ -493,13 +485,13 @@ html.lenis body {
   box-shadow:
     0 16px 42px -26px rgba(14, 29, 43, 0.46),
     inset 0 1px 0 rgba(255, 255, 255, 0.65);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
 }
 
 .site-section {
   position: relative;
   padding-block: clamp(4.5rem, 10vw, 8rem);
+  content-visibility: auto;
+  contain-intrinsic-size: 1200px;
 }
 
 .content-wrap {
@@ -597,10 +589,7 @@ html.lenis body {
   box-shadow:
     0 35px 55px -42px rgba(14, 29, 43, 0.55),
     inset 0 1px 0 rgba(255, 255, 255, 0.62);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  transform-style: preserve-3d;
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
 }
 
 .map-card::after {
@@ -639,17 +628,16 @@ html.lenis body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.22), transparent 28%),
-    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.14), transparent 22%);
+  background: radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.15), transparent 28%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.08), transparent 22%);
   opacity: 0.85;
-  transition: opacity 300ms var(--ease-smooth), transform 300ms var(--ease-smooth);
-  transform: translateZ(0) scale(0.98);
+  transition: opacity 200ms ease;
+  transform: translateZ(0);
 }
 
 .map-card-hover:hover::before,
 .map-card-hover:focus-within::before {
   opacity: 1;
-  transform: translateZ(0) scale(1);
 }
 
 .chip {

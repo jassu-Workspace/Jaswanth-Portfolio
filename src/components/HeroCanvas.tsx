@@ -1,10 +1,21 @@
 "use client";
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useEffect, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
+function useVisible() {
+  const [visible, setVisible] = useState(true);
+  useEffect(() => {
+    const update = () => setVisible(!document.hidden);
+    document.addEventListener("visibilitychange", update);
+    return () => document.removeEventListener("visibilitychange", update);
+  }, []);
+  return visible;
+}
+
 function DriftParticles({ count = 140, lowQuality = false }: { count?: number; lowQuality?: boolean }) {
   const meshRef = useRef<THREE.Points>(null);
+  const visible = useVisible();
 
   const [positions, colors] = useMemo(() => {
     const pos = new Float32Array(count * 3);
@@ -23,12 +34,12 @@ function DriftParticles({ count = 140, lowQuality = false }: { count?: number; l
   }, [count]);
 
   useFrame((state) => {
-    if (!meshRef.current) return;
+    if (!meshRef.current || !visible) return;
     const t = state.clock.elapsedTime;
-    const speedY = lowQuality ? 0.008 : 0.02;
-    const speedX = lowQuality ? 0.02 : 0.08;
+    const speedY = lowQuality ? 0.004 : 0.012;
+    const speedX = lowQuality ? 0.012 : 0.048;
     meshRef.current.rotation.y = t * speedY;
-    meshRef.current.rotation.x = Math.sin(t * speedX) * (lowQuality ? 0.01 : 0.03);
+    meshRef.current.rotation.x = Math.sin(t * speedX) * (lowQuality ? 0.006 : 0.018);
   });
 
   return (
@@ -45,14 +56,16 @@ function DriftParticles({ count = 140, lowQuality = false }: { count?: number; l
 function RouteRings({ lowQuality = false }: { lowQuality?: boolean }) {
   const outerRef = useRef<THREE.Mesh>(null);
   const innerRef = useRef<THREE.Mesh>(null);
+  const visible = useVisible();
 
   useFrame((state) => {
+    if (!visible) return;
     if (outerRef.current) {
-      outerRef.current.rotation.z = state.clock.elapsedTime * (lowQuality ? 0.02 : 0.08);
+      outerRef.current.rotation.z = state.clock.elapsedTime * (lowQuality ? 0.012 : 0.048);
     }
 
     if (innerRef.current) {
-      innerRef.current.rotation.z = -state.clock.elapsedTime * (lowQuality ? 0.04 : 0.14);
+      innerRef.current.rotation.z = -state.clock.elapsedTime * (lowQuality ? 0.024 : 0.084);
     }
   });
 
@@ -73,10 +86,11 @@ function RouteRings({ lowQuality = false }: { lowQuality?: boolean }) {
 
 function CrossLines({ lowQuality = false }: { lowQuality?: boolean }) {
   const linesRef = useRef<THREE.Group>(null);
+  const visible = useVisible();
 
   useFrame((state) => {
-    if (!linesRef.current) return;
-    linesRef.current.rotation.z = Math.sin(state.clock.elapsedTime * (lowQuality ? 0.08 : 0.2)) * (lowQuality ? 0.02 : 0.08);
+    if (!linesRef.current || !visible) return;
+    linesRef.current.rotation.z = Math.sin(state.clock.elapsedTime * (lowQuality ? 0.04 : 0.1)) * (lowQuality ? 0.01 : 0.04);
   });
 
   return (
@@ -99,7 +113,7 @@ type HeroCanvasProps = {
 
 export default function HeroCanvas({ lowQuality = false }: HeroCanvasProps) {
   // Lower DPR and prefer low-power during intro/morph to maximize FPS
-  const dpr: [number, number] = lowQuality ? [0.6, 0.9] : [1, 1.5];
+  const dpr: [number, number] = lowQuality ? [0.5, 0.7] : [1, 1.3];
   const powerPreference = lowQuality ? "low-power" : "high-performance";
 
   return (
@@ -110,7 +124,7 @@ export default function HeroCanvas({ lowQuality = false }: HeroCanvasProps) {
       style={{ width: "100%", height: "100%", willChange: "transform" }}
     >
       <ambientLight intensity={0.46} />
-      <DriftParticles count={lowQuality ? 60 : 150} lowQuality={lowQuality} />
+      <DriftParticles count={lowQuality ? 40 : 100} lowQuality={lowQuality} />
       <RouteRings lowQuality={lowQuality} />
       <CrossLines lowQuality={lowQuality} />
       <fog attach="fog" args={["#efe5d0", 12, 34]} />

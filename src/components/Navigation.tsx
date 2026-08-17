@@ -19,22 +19,32 @@ export default function Navigation() {
   const [active, setActive] = useState("hero");
 
   useEffect(() => {
+    let rafId = 0;
     const onScroll = () => {
-      const topOffset = window.scrollY + 180;
-      setScrolled(window.scrollY > 40);
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        const topOffset = window.scrollY + 180;
+        setScrolled(window.scrollY > 40);
 
-      for (const link of [...navLinks].reverse()) {
-        const section = document.getElementById(link.id);
-        if (section && section.offsetTop <= topOffset) {
-          setActive(link.id);
-          break;
+        for (const link of [...navLinks].reverse()) {
+          const section = document.getElementById(link.id);
+          if (section && section.offsetTop <= topOffset) {
+            setActive(link.id);
+            break;
+          }
         }
-      }
+        rafId = 0;
+      });
     };
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   return (

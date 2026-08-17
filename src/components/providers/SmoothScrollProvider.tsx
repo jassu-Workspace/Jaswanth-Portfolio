@@ -17,12 +17,12 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
     }
 
     const lenis = new Lenis({
-      duration: 1.05,
+      duration: 0.6,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      touchMultiplier: 1.6,
+      touchMultiplier: 1.2,
     });
     lenisRef.current = lenis;
 
@@ -32,7 +32,7 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
       lenis.raf(time * 1000);
     };
     gsap.ticker.add(tickerFn);
-    gsap.ticker.lagSmoothing(0);
+    gsap.ticker.lagSmoothing(12, 200);
 
     return () => {
       gsap.ticker.remove(tickerFn);
