@@ -111,11 +111,14 @@ export default function HeroSection() {
   }, [introComplete]);
 
   return (
-    <section
+    <motion.section
       id="hero"
       ref={sectionRef}
       className="site-section relative flex min-h-screen items-center overflow-hidden pt-20"
-      style={introComplete ? undefined : { visibility: "hidden" }}
+      style={introComplete ? undefined : { display: "none" }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
     >
       <SectionAmbient />
 
@@ -132,7 +135,6 @@ export default function HeroSection() {
         <div className="grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr]">
           <div>
             <motion.p
-              layoutId="shared-role-line"
               className="hero-stagger section-kicker"
               style={{ willChange: "transform, opacity" }}
               initial={{ opacity: 0, y: 34 }}
@@ -140,21 +142,20 @@ export default function HeroSection() {
               transition={{
                 duration: 0.9,
                 ease: [0.22, 1, 0.36, 1],
-                delay: 0.25,
+                delay: 0.15,
               }}
             >
               AI Systems | Full-Stack Product Engineering
             </motion.p>
             <motion.h1
-              layoutId="jaswanth-name"
-              className="hero-stagger morph-name-shared text-depth-main mt-5 text-[clamp(3.2rem,10vw,7.5rem)] leading-[0.92] text-[#0e1d2b]"
+              className="morph-name-shared text-depth-main mt-5 text-[clamp(3.2rem,10vw,7.5rem)] leading-[0.92] text-[#0e1d2b]"
               style={{ willChange: "transform, opacity" }}
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
                 duration: 0.65,
                 ease: sharedMorphEase,
-                layout: { duration: sharedMorphDuration, ease: sharedMorphEase },
+                delay: 0.05,
               }}
             >
               Jaswanth
@@ -184,7 +185,7 @@ export default function HeroSection() {
                 transition={{
                   duration: 0.5,
                   ease: sharedMorphEase,
-                  layout: { duration: sharedMorphDuration, ease: sharedMorphEase },
+                  delay: 0.25,
                 }}
               >
                 Startup Opportunity: Horizon AI
@@ -264,6 +265,6 @@ export default function HeroSection() {
           </span>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

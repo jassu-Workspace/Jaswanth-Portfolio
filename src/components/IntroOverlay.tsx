@@ -125,36 +125,28 @@ export default function IntroOverlay() {
             </motion.div>
 
             <motion.h1
-              layoutId="jaswanth-name"
               className="intro-title morph-name-shared"
               style={{ willChange: "transform, opacity" }}
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, transition: { duration: 0.2 } }}
               transition={{
                 duration: reduceMotion ? 0.2 : 0.6,
                 delay: reduceMotion ? 0 : 0.24,
-                layout: {
-                  duration: reduceMotion ? 0.12 : 0.6,
-                  ease: SHARED_MORPH_EASE,
-                },
               }}
             >
               Jaswanth
             </motion.h1>
 
             <motion.p
-              layoutId="shared-role-line"
               className="intro-subtitle"
               style={{ willChange: "transform, opacity" }}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, transition: { duration: 0.2 } }}
               transition={{
                 duration: reduceMotion ? 0.2 : 0.5,
                 delay: reduceMotion ? 0 : 0.34,
-                layout: {
-                  duration: reduceMotion ? 0.12 : 0.5,
-                  ease: SHARED_MORPH_EASE,
-                },
               }}
             >
               AI Systems | Full-Stack Product Engineering
@@ -164,6 +156,7 @@ export default function IntroOverlay() {
               className="intro-welcome"
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, transition: { duration: 0.2 } }}
               transition={{ duration: reduceMotion ? 0.2 : 0.45, delay: reduceMotion ? 0 : 0.43 }}
             >
               Explore startup-ready execution, interface storytelling, and robust AI-driven delivery across real products.
@@ -192,6 +185,7 @@ export default function IntroOverlay() {
               className="intro-badges"
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, transition: { duration: 0.2 } }}
               transition={{ duration: reduceMotion ? 0.2 : 0.45, delay: reduceMotion ? 0 : 0.5 }}
             >
               <span className="intro-badge">
@@ -203,16 +197,14 @@ export default function IntroOverlay() {
                 Motion Calibrated
               </span>
               <motion.span
-                layoutId="shared-startup-chip"
                 className="intro-badge"
                 style={{ willChange: "transform, opacity" }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, transition: { duration: 0.2 } }}
                 transition={{
                   duration: reduceMotion ? 0.2 : 0.45,
-                  ease: SHARED_MORPH_EASE,
-                  layout: {
-                    duration: reduceMotion ? 0.12 : 0.45,
-                    ease: SHARED_MORPH_EASE,
-                  },
+                  delay: reduceMotion ? 0 : 0.43,
                 }}
               >
                 <Compass className="h-3.5 w-3.5" aria-hidden="true" />

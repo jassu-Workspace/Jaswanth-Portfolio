@@ -81,12 +81,11 @@ export default function FloatingCompass() {
         </div>
 
         <motion.div
-          layoutId="vivre-signal-dial"
           className="relative mx-auto flex h-24 w-24 items-center justify-center"
+          style={{ willChange: "transform, opacity" }}
           transition={{
             duration: 0.65,
             ease: SHARED_MORPH_EASE,
-            layout: { duration: sharedMorphDuration, ease: SHARED_MORPH_EASE },
           }}
         >
           <div className="compass-ring-anim absolute inset-0 rounded-full border border-dashed border-[#3f769d]/45" />
@@ -94,6 +93,7 @@ export default function FloatingCompass() {
           <motion.div
             className="relative flex h-14 w-14 items-center justify-center rounded-full border border-[#21405b]/20 bg-white/65"
             animate={{ rotate: rotation }}
+            style={{ transformOrigin: "center center" }}
             transition={{ duration: 0.6, ease: SHARED_MORPH_EASE }}
           >
             <div className={`compass-dial-rotor ${isScrewing ? "compass-screw-active" : ""}`} aria-hidden="true">
