@@ -177,7 +177,6 @@ export default function HeroSection() {
               </span>
               <span className="chip">AICTE IDE Bootcamp Awardee</span>
               <motion.span
-                layoutId="shared-startup-chip"
                 className="chip"
                 style={{ willChange: "transform, opacity" }}
                 initial={{ opacity: 0, y: 10 }}
