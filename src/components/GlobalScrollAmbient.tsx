@@ -3,16 +3,25 @@ import { useEffect, useRef, useState } from "react";
 
 export default function GlobalScrollAmbient() {
   const [reduce, setReduce] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+
   useEffect(() => {
     setReduce(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const on = () => setReduce(mq.matches);
-    mq.addEventListener("change", on);
-    return () => mq.removeEventListener("change", on);
+    const onReduce = () => setReduce(mq.matches);
+    mq.addEventListener("change", onReduce);
+
+    const onVisibility = () => setIsVisible(!document.hidden);
+    document.addEventListener("visibilitychange", onVisibility);
+
+    return () => {
+      mq.removeEventListener("change", onReduce);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
   }, []);
 
   // Only render animated waves when not reduced-motion and when document is visible.
-  const showAnimation = !reduce && !document.hidden;
+  const showAnimation = !reduce && isVisible;
 
   return (
     <div
