@@ -17,6 +17,7 @@ export default function HeroSection() {
   const sharedMorphDuration = reduceMotion ? 0.2 : 1.28;
   const sharedMorphEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
   const [lowQualityCanvas, setLowQualityCanvas] = useState(true);
+  const [introComplete, setIntroComplete] = useState(false);
 
   const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
     const target = heroSignalRef.current;
@@ -40,6 +41,14 @@ export default function HeroSection() {
   };
 
   useEffect(() => {
+    const onIntroComplete = () => setIntroComplete(true);
+    window.addEventListener("intro:complete", onIntroComplete);
+    return () => window.removeEventListener("intro:complete", onIntroComplete);
+  }, []);
+
+  useEffect(() => {
+    if (!introComplete) return;
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ".hero-stagger",
@@ -92,27 +101,21 @@ export default function HeroSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [introComplete]);
 
   useEffect(() => {
-    // Keep canvas in low-quality mode until intro completes/finishes morph
-    const onIntroComplete = () => {
-      // keep low-quality on for a short window around the morph
-      setLowQualityCanvas(true);
-      window.setTimeout(() => setLowQualityCanvas(false), 700);
-    };
-
-    // while intro is present we want reduced canvas quality
+    if (!introComplete) return;
+    // Keep canvas in low-quality mode for a short window around the morph
     setLowQualityCanvas(true);
-    window.addEventListener("intro:complete", onIntroComplete);
-    return () => window.removeEventListener("intro:complete", onIntroComplete);
-  }, []);
+    window.setTimeout(() => setLowQualityCanvas(false), 700);
+  }, [introComplete]);
 
   return (
     <section
       id="hero"
       ref={sectionRef}
       className="site-section relative flex min-h-screen items-center overflow-hidden pt-20"
+      style={introComplete ? undefined : { visibility: "hidden" }}
     >
       <SectionAmbient />
 
@@ -132,12 +135,12 @@ export default function HeroSection() {
               layoutId="shared-role-line"
               className="hero-stagger section-kicker"
               style={{ willChange: "transform, opacity" }}
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 34 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
-                duration: 0.6,
-                ease: sharedMorphEase,
-                layout: { duration: sharedMorphDuration, ease: sharedMorphEase },
+                duration: 0.9,
+                ease: [0.22, 1, 0.36, 1],
+                delay: 0.25,
               }}
             >
               AI Systems | Full-Stack Product Engineering

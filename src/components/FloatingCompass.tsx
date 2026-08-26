@@ -18,6 +18,7 @@ export default function FloatingCompass() {
   const [rotation, setRotation] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isScrewing, setIsScrewing] = useState(false);
+  const [introComplete, setIntroComplete] = useState(false);
 
   const reduceMotion = useReducedMotion();
   const sharedMorphDuration = reduceMotion ? 0.2 : 0.6;
@@ -56,8 +57,7 @@ export default function FloatingCompass() {
   }, []);
 
   useEffect(() => {
-    const onIntroComplete = () => setIsScrewing(true);
-
+    const onIntroComplete = () => setIntroComplete(true);
     window.addEventListener("intro:complete", onIntroComplete);
     return () => window.removeEventListener("intro:complete", onIntroComplete);
   }, []);
@@ -70,7 +70,10 @@ export default function FloatingCompass() {
   }, [isScrewing]);
 
   return (
-    <aside className="fixed right-5 top-24 z-40 hidden xl:block">
+    <aside
+      className="fixed right-5 top-24 z-40 hidden xl:block"
+      style={introComplete ? undefined : { visibility: "hidden" }}
+    >
       <div className="float-slow map-card map-card-hover w-[196px] p-4">
         <div className="mb-3 flex items-center justify-between">
           <p className="fan-mark">Vivre Signal</p>
