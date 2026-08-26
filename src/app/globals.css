@@ -134,7 +134,8 @@ html.lenis body {
   position: absolute;
   border-radius: 100%;
   opacity: 0.18;
-  filter: blur(54px);
+  /* Reduced from blur(54px) — 54px blur on 42vmax circles is extremely expensive */
+  filter: blur(32px);
 }
 
 .global-wave-a {
@@ -224,7 +225,8 @@ html.lenis body {
     radial-gradient(circle at 88% 18%, rgba(208, 103, 82, 0.34), rgba(208, 103, 82, 0) 38%),
     radial-gradient(circle at 52% 92%, rgba(172, 123, 47, 0.16), rgba(172, 123, 47, 0) 48%),
     linear-gradient(170deg, #fffaf5 0%, #f4ede2 44%, #eee5d3 100%);
-  backdrop-filter: blur(12px);
+  /* Reduced from blur(12px) — heavy on full-viewport elements */
+  backdrop-filter: blur(4px);
 }
 
 .intro-content {
@@ -258,7 +260,8 @@ html.lenis body {
   width: 48vmax;
   aspect-ratio: 1;
   border-radius: 100%;
-  filter: blur(86px);
+  /* Reduced from blur(86px) — massive blur on full-viewport element is the heaviest paint in the intro */
+  filter: blur(52px);
   pointer-events: none;
 }
 
@@ -542,26 +545,31 @@ html.lenis body {
 
 .morph-name-shared {
   transform-origin: center center;
-  will-change: transform, opacity;
   backface-visibility: hidden;
 }
 
+/* Only promote layers for elements that actually animate during scroll.
+   Promoting every ambient blob creates hundreds of GPU layers and
+   tanks scroll FPS on low-end devices. */
 .hero-parallax-bg,
-.hero-depth-layer,
 .hero-signal,
-.section-ambient-grid,
-.section-ambient-glow,
-.section-ambient-points,
+.scroll-progress,
 .intro-grid,
 .intro-aurora,
-.intro-scanline,
-.scroll-progress,
+.intro-scanline {
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Static gradient layers (depth, glows, rings, points) do not need
+   compositing layers — only the small ones that animate do. */
+.hero-depth-layer,
+.section-ambient-glow,
+.section-ambient-points,
 .global-wave,
 .global-drift-points,
 .global-ring {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  will-change: transform, opacity;
+  contain: layout paint;
 }
 
 .hero-signal {
@@ -589,7 +597,6 @@ html.lenis body {
   box-shadow:
     0 35px 55px -42px rgba(14, 29, 43, 0.55),
     inset 0 1px 0 rgba(255, 255, 255, 0.62);
-  will-change: transform, opacity;
 }
 
 .map-card::after {
@@ -780,7 +787,8 @@ html.lenis body {
   width: 52vmax;
   aspect-ratio: 1;
   border-radius: 100%;
-  filter: blur(74px);
+  /* Reduced from blur(74px) */
+  filter: blur(48px);
   opacity: 0.26;
 }
 

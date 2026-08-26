@@ -1,14 +1,31 @@
 "use client";
+import { useEffect, useRef, useState } from "react";
 
 export default function GlobalScrollAmbient() {
+  const [reduce, setReduce] = useState(false);
+  useEffect(() => {
+    setReduce(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const on = () => setReduce(mq.matches);
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
+
+  // Only render animated waves when not reduced-motion and when document is visible.
+  const showAnimation = !reduce && !document.hidden;
+
   return (
-    <div className="global-scroll-ambient" aria-hidden="true" style={{ willChange: "transform" }}>
-      <div className="global-wave global-wave-a" style={{ willChange: "transform, filter" }} />
-      <div className="global-wave global-wave-b" style={{ willChange: "transform, filter" }} />
-      <div className="global-wave global-wave-c" style={{ willChange: "transform, filter" }} />
-      <div className="global-drift-points" style={{ willChange: "transform" }} />
+    <div
+      className="global-scroll-ambient"
+      aria-hidden="true"
+      style={showAnimation ? { opacity: 1 } : { opacity: 0 }}
+    >
+      <div className="global-wave global-wave-a" />
+      <div className="global-wave global-wave-b" />
+      <div className="global-wave global-wave-c" />
+      <div className="global-drift-points" />
       <div className="global-ring global-ring-a" />
       <div className="global-ring global-ring-b" />
     </div>
   );
-}
+}
