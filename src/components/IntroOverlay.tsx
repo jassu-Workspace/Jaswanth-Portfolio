@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Compass, Sparkles, Waves } from "lucide-react";
 
@@ -11,37 +11,23 @@ const SHARED_MORPH_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 export default function IntroOverlay() {
   const reduceMotion = useReducedMotion();
   const [isVisible, setIsVisible] = useState(true);
-  const hasDispatchedComplete = useRef(false);
 
   useEffect(() => {
-    if (!isVisible) {
-      document.body.style.overflow = "";
-      return;
-    }
+    // Hide overlay and dispatch intro complete event on timer
+    const duration = reduceMotion ? REDUCED_INTRO_DURATION_MS : INTRO_DURATION_MS;
+    const timeout = window.setTimeout(() => {
+      setIsVisible(false);
+      // Dispatch complete after a brief delay to ensure HeroSection is ready
+      window.dispatchEvent(new Event("intro:complete"));
+    }, duration);
 
+    // Prevent body scroll while intro is visible
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
+      window.clearTimeout(timeout);
     };
-  }, [isVisible]);
-
-  useEffect(() => {
-    if (!isVisible) return;
-
-    const timeout = window.setTimeout(
-      () => setIsVisible(false),
-      reduceMotion ? REDUCED_INTRO_DURATION_MS : INTRO_DURATION_MS
-    );
-
-    return () => window.clearTimeout(timeout);
-  }, [isVisible, reduceMotion]);
-
-  useEffect(() => {
-    if (isVisible || hasDispatchedComplete.current) return;
-
-    hasDispatchedComplete.current = true;
-    window.dispatchEvent(new Event("intro:complete"));
-  }, [isVisible]);
+  }, [reduceMotion]);
 
   return (
     <AnimatePresence mode="wait">
