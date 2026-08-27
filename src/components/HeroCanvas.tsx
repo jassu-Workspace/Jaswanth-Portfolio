@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useMemo, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -35,7 +35,7 @@ function useInView(ref: React.RefObject<HTMLElement | null>) {
 function DriftParticles({ count = 100 }: { count?: number }) {
   const meshRef = useRef<THREE.Points>(null);
 
-  const [positions, colors] = useMemo(() => {
+  const [{ positions, colors }] = useState(() => {
     const pos = new Float32Array(count * 3);
     const col = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
@@ -48,8 +48,8 @@ function DriftParticles({ count = 100 }: { count?: number }) {
       col[i * 3 + 1] = t < 0.75 ? 0.45 : 0.58;
       col[i * 3 + 2] = t < 0.75 ? 0.61 : 0.26;
     }
-    return [pos, col];
-  }, [count]);
+    return { positions: pos, colors: col };
+  });
 
   useFrame((state) => {
     if (!meshRef.current) return;

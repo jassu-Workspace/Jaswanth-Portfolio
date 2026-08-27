@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Compass, Navigation, Waves } from "lucide-react";
 
 const SHARED_MORPH_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -19,9 +19,6 @@ export default function FloatingCompass() {
   const [progress, setProgress] = useState(0);
   const [isScrewing, setIsScrewing] = useState(false);
   const [introComplete, setIntroComplete] = useState(false);
-
-  const reduceMotion = useReducedMotion();
-  const sharedMorphDuration = reduceMotion ? 0.2 : 0.6;
 
   useEffect(() => {
     let rafId = 0;

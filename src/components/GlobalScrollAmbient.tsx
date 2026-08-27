@@ -1,12 +1,13 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function GlobalScrollAmbient() {
-  const [reduce, setReduce] = useState(false);
+  const [reduce, setReduce] = useState(() =>
+    typeof window !== "undefined" ? window.matchMedia("(prefers-reduced-motion: reduce)").matches : false
+  );
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    setReduce(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     const onReduce = () => setReduce(mq.matches);
     mq.addEventListener("change", onReduce);

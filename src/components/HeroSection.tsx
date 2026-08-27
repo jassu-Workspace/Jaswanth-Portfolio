@@ -1,10 +1,12 @@
 "use client";
-import { useRef, useEffect, Suspense, lazy, useState, type PointerEvent } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef, useEffect, Suspense, lazy, useState } from "react";
+import { motion } from "framer-motion";
 import { ArrowRight, Binoculars, Sparkles } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionAmbient from "@/components/SectionAmbient";
+import { useScrollReveal } from "@/components/hooks/useScrollReveal";
+import { useScrollProgress } from "@/components/hooks/useScrollProgress";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,24 +15,18 @@ const HeroCanvas = lazy(() => import("./HeroCanvas"));
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const heroSignalRef = useRef<HTMLDivElement>(null);
-  const reduceMotion = useReducedMotion();
-  const sharedMorphDuration = reduceMotion ? 0.2 : 1.28;
   const sharedMorphEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
   const [lowQualityCanvas, setLowQualityCanvas] = useState(true);
   const [introComplete, setIntroComplete] = useState(false);
+  const qualityTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
-    const target = heroSignalRef.current;
-    if (!target) return;
-
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    const target = event.currentTarget;
     const rect = target.getBoundingClientRect();
     const x = event.clientX - (rect.left + rect.width / 2);
     const y = event.clientY - (rect.top + rect.height / 2);
-    const rotationY = (x / (rect.width / 2)) * 12;
-    const rotationX = -(y / (rect.height / 2)) * 10;
-
-    target.style.setProperty("--hero-card-rotate-x", `${rotationX}deg`);
-    target.style.setProperty("--hero-card-rotate-y", `${rotationY}deg`);
+    target.style.setProperty("--hero-card-rotate-x", `-${(y / (rect.height / 2)) * 10}deg`);
+    target.style.setProperty("--hero-card-rotate-y", `${(x / (rect.width / 2)) * 12}deg`);
   };
 
   const resetHeroSignal = () => {
@@ -46,68 +42,48 @@ export default function HeroSection() {
     return () => window.removeEventListener("intro:complete", onIntroComplete);
   }, []);
 
-  useEffect(() => {
-    if (!introComplete) return;
+  useScrollReveal(sectionRef, {
+    items: [
+      { selector: ".hero-stagger", y: 34, opacity: 0, duration: 0.9, delay: 0.25, stagger: 0.09 },
+    ],
+    start: "top 85%",
+  });
 
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".hero-stagger",
-        { opacity: 0, y: 34 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.9,
-          stagger: 0.09,
-          ease: "power3.out",
-          delay: 0.25,
-        }
-      );
-
-      gsap.to(".hero-parallax-bg", {
-        yPercent: 18,
-        scale: 1.035,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      gsap.to(".hero-depth-layer", {
-        yPercent: -12,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      gsap.to(".hero-signal", {
-        xPercent: -6,
-        rotateY: 5,
-        rotateX: -3,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, [introComplete]);
+  useScrollProgress(sectionRef, {
+    items: [
+      {
+        selector: ".hero-parallax-bg",
+        from: { yPercent: 0, scale: 1 },
+        to: { yPercent: 18, scale: 1.035 },
+        scrub: true,
+      },
+      {
+        selector: ".hero-depth-layer",
+        from: { yPercent: 0 },
+        to: { yPercent: -12 },
+        scrub: true,
+      },
+      {
+        selector: ".hero-signal",
+        from: { xPercent: 0, rotateY: 0, rotateX: 0 },
+        to: { xPercent: -6, rotateY: 5, rotateX: -3 },
+        scrub: true,
+      },
+    ],
+    start: "top top",
+    end: "bottom top",
+    scrub: true,
+  });
 
   useEffect(() => {
     if (!introComplete) return;
-    // Keep canvas in low-quality mode for a short window around the morph
+    // Brief low-quality window around the morph, then restore full quality.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLowQualityCanvas(true);
-    window.setTimeout(() => setLowQualityCanvas(false), 700);
+    qualityTimerRef.current = setTimeout(() => setLowQualityCanvas(false), 700);
+    return () => {
+      if (qualityTimerRef.current) clearTimeout(qualityTimerRef.current);
+    };
   }, [introComplete]);
 
   return (

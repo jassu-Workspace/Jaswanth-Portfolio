@@ -1,9 +1,7 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import SectionAmbient from "@/components/SectionAmbient";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   BrainCircuit,
   CloudCog,
@@ -14,8 +12,7 @@ import {
   Sparkles,
   Workflow,
 } from "lucide-react";
-
-gsap.registerPlugin(ScrollTrigger);
+import { useScrollProgress } from "@/components/hooks/useScrollProgress";
 
 const techCategories = [
   {
@@ -63,42 +60,17 @@ export default function ArsenalSection() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.2 });
 
-  useEffect(() => {
-    if (!ref.current) return;
-
-    const ctx = gsap.context(() => {
-      gsap.utils.toArray<HTMLElement>(".arsenal-card").forEach((card, index) => {
-        gsap.fromTo(
-          card,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.95,
-            ease: "power3.out",
-            delay: index * 0.06,
-            scrollTrigger: {
-              trigger: card,
-              start: "top 88%",
-            },
-          }
-        );
-      });
-
-      gsap.to(".arsenal-current-line", {
-        xPercent: -22,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ref.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-    }, ref);
-
-    return () => ctx.revert();
-  }, []);
+  useScrollProgress(ref, {
+    items: [
+      {
+        selector: ".arsenal-current-line",
+        from: { xPercent: 0 },
+        to: { xPercent: -22 },
+      },
+    ],
+    start: "top bottom",
+    end: "bottom top",
+  });
 
   return (
     <section id="arsenal" ref={ref} className="site-section overflow-hidden">

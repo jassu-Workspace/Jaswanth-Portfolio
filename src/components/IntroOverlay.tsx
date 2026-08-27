@@ -12,7 +12,6 @@ export default function IntroOverlay() {
   const reduceMotion = useReducedMotion();
   const [isVisible, setIsVisible] = useState(true);
   const hasDispatchedComplete = useRef(false);
-  const sharedMorphDuration = reduceMotion ? 0.2 : 1.28;
 
   useEffect(() => {
     if (!isVisible) {

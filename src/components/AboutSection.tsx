@@ -1,12 +1,8 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import SectionAmbient from "@/components/SectionAmbient";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight, BrainCircuit, Code2, Handshake, Link2, Mail, PhoneCall, Rocket, ShieldCheck } from "lucide-react";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const traits = [
   {
@@ -51,32 +47,6 @@ const CONTACT_PHONE_LINK = "+918500923656";
 export default function AboutSection() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.2 });
-
-  useEffect(() => {
-    if (!ref.current) return;
-
-    const ctx = gsap.context(() => {
-      gsap.utils.toArray<HTMLElement>(".about-card").forEach((card, index) => {
-        gsap.fromTo(
-          card,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.85,
-            ease: "power3.out",
-            delay: index * 0.05,
-            scrollTrigger: {
-              trigger: card,
-              start: "top 88%",
-            },
-          }
-        );
-      });
-    }, ref);
-
-    return () => ctx.revert();
-  }, []);
 
   return (
     <section id="about" ref={ref} className="site-section overflow-hidden pb-20">
