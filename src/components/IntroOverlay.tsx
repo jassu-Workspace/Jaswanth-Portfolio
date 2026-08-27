@@ -17,7 +17,8 @@ export default function IntroOverlay() {
     const duration = reduceMotion ? REDUCED_INTRO_DURATION_MS : INTRO_DURATION_MS;
     const timeout = window.setTimeout(() => {
       setIsVisible(false);
-      // Dispatch complete after a brief delay to ensure HeroSection is ready
+      // Remove scroll lock immediately so user can scroll during exit animation
+      document.body.style.overflow = "";
       window.dispatchEvent(new Event("intro:complete"));
     }, duration);
 
@@ -201,7 +202,11 @@ export default function IntroOverlay() {
           <motion.button
             type="button"
             className="intro-skip"
-            onClick={() => setIsVisible(false)}
+            onClick={() => {
+              setIsVisible(false);
+              document.body.style.overflow = "";
+              window.dispatchEvent(new Event("intro:complete"));
+            }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.2, delay: reduceMotion ? 0 : 0.45 }}
