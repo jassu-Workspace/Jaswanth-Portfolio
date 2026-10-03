@@ -44,7 +44,17 @@ From deployment to iteration with security and quality built in.
 
 *These builds represent my strongest blend of AI capability, interface quality, and product pragmatism.*
 
+### Sovereign Systems & Autonomous Agents
+
+**Zero-Trust AI Web Agent (Project 171 — ISRO)**
+*Tech Stack: `WXT (MV3)`, `React 18`, `TypeScript`, `ONNX Runtime Web (WebGPU/WASM)`, `YOLOv8n`, `MediaPipe`, `Hono`, `Gemini 3.8 Flash`*
+Sovereign on-device browser automation platform built for Smart India Hackathon (Problem Statement 26171 — ISRO). Solves the autonomous agent privacy paradox via a split-brain architecture: executes all perception, 25-class PII redaction, MediaPipe facial blurring, and INT8 PP-OCRv4 locally in-tab via WebGPU/WASM, ensuring raw sensitive data never reaches cloud LLMs. Validated with 515/515 passing unified tests, 0.16 µs firewall throughput (6.08M scans/sec), and 0 raw PII leaks across 1,200 forensic audits.
+
 ### Education Intelligence
+
+**EduAnswer AI**
+*Tech Stack: `Python 3.12`, `FastAPI`, `Celery`, `Redis`, `PostgreSQL`, `pgvector`, `React 19`, `Tailwind 4`*
+Enterprise academic intelligence platform that automates publication-ready, mark-calibrated exam answer keys with examiner rubrics and visual aids. Employs a multi-agent AI pipeline (DecomposerAgent, DomainSolverAgent, CriticAuditorAgent) with hybrid RAG (Dense embeddings + BM25 sparse search + Reciprocal Rank Fusion + cross-encoder re-ranking), 4D hallucination verification, Celery asynchronous processing, and 27 RESTful endpoints with WebSocket telemetry.
 
 **Horizon AI v2**
 *Tech Stack: `React 18`, `TypeScript`, `Supabase`, `PostgreSQL`, `FAISS`, `RAG`*

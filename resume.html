@@ -158,22 +158,50 @@
         <h2>Technical Skills</h2>
         <div class="skills-container">
             <div class="skill-group">
-                <span class="skill-title">Languages & Frameworks:</span> TypeScript, JavaScript, Python, React 19, Next.js 16, Node.js
+                <span class="skill-title">Languages & Frameworks:</span> TypeScript, JavaScript, Python, React 19, Next.js, FastAPI, Hono, Node.js
             </div>
             <div class="skill-group">
-                <span class="skill-title">AI & Intelligence:</span> Gemini, DeepSeek, Ollama, RAG pipelines, FAISS, Computer Vision, OpenCV
+                <span class="skill-title">AI & Intelligence:</span> Gemini 3.8 Flash, Hybrid RAG (Dense + BM25 + RRF), pgvector, FAISS, ONNX WebGPU, YOLOv8n, MediaPipe
             </div>
             <div class="skill-group">
-                <span class="skill-title">Backend & Database:</span> Supabase, Firebase, PostgreSQL, Redis, FastAPI, SQLAlchemy, SQLite
+                <span class="skill-title">Backend & Database:</span> PostgreSQL, Redis, Celery, Supabase, Firebase, SQLAlchemy, SQLite, WebSockets
             </div>
             <div class="skill-group">
-                <span class="skill-title">Tools & Deployment:</span> Git, CI/CD, Vercel, BullMQ, Testing Libraries
+                <span class="skill-title">Tools & Deployment:</span> Docker, Git, CI/CD Actions, Vercel, BullMQ, Pytest, Vitest
             </div>
         </div>
     </section>
 
     <section>
         <h2>Engineering Projects & Achievements</h2>
+
+        <div class="item">
+            <div class="item-header">
+                <span class="item-title">Zero-Trust AI Web Agent (Project 171)</span>
+                <span class="item-subtitle">Sovereign On-Device Browser Automation | ISRO (SIH PS 26171)</span>
+            </div>
+            <ul>
+                <li>Engineered an edge-cloud split-brain autonomous web agent for ISRO sovereign and defense portals (SIH Problem Statement 26171), guaranteeing zero raw-PII cloud egress across 1,200 forensic security audits.</li>
+                <li>Architected on-device perception pipelines using ONNX Runtime Web (WebGPU/WASM), integrating a dual-GPU trained INT8 YOLOv8n UI detector and MediaPipe facial landmarker with sub-40ms execution times.</li>
+                <li>Built 20 deterministic DOM perception engines covering complex web archetypes (GIS map canvases, ERPs, Shadow DOM, virtual tables), achieving 100% precision and 1.79ms average latency across a 102-scenario test harness.</li>
+                <li>Developed a high-throughput Hono orchestration gateway featuring a 0.16 µs (6.08M scans/sec) zero-trust PII firewall and a 6-gate decision cascade that routes discrete actions to a fast tactical pilot (667ms) and complex vision tasks to Gemini 3.8 Flash.</li>
+                <li>Delivered 515/515 passing unified tests encompassing end-to-end client redaction, server wire contracts, and multimodal visual grounding benchmarks.</li>
+            </ul>
+        </div>
+
+        <div class="item">
+            <div class="item-header">
+                <span class="item-title">EduAnswer AI</span>
+                <span class="item-subtitle">Enterprise Academic Intelligence & Multi-Agent RAG Platform</span>
+            </div>
+            <ul>
+                <li>Engineered an academic intelligence platform automating publication-ready, mark-calibrated exam answer keys and examiner rubrics from syllabus reference materials.</li>
+                <li>Architected a multi-agent AI pipeline featuring DecomposerAgent (Bloom's taxonomy decomposition), DomainSolverAgent (domain prompt tuning), and CriticAuditorAgent (claim-level hallucination auditing).</li>
+                <li>Built a hybrid RAG engine combining dense vector search in PostgreSQL (pgvector) with BM25 sparse search, Reciprocal Rank Fusion (RRF), and cross-encoder re-ranking.</li>
+                <li>Implemented an asynchronous document ingestion pipeline with FastAPI, Celery, and Redis, delivering 27+ RESTful API endpoints and real-time WebSocket job tracking to a React 19 interface.</li>
+                <li>Developed automated examiner step-marking rubrics, Mermaid visual diagram generators, and multi-format document export pipelines (PDF, DOCX, Markdown, HTML).</li>
+            </ul>
+        </div>
 
         <div class="item">
             <div class="item-header">

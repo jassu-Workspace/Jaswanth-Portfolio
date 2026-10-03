@@ -4,7 +4,8 @@ import { motion, useInView } from "framer-motion";
 import SectionAmbient from "@/components/SectionAmbient";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowUpRight, Bot, BrainCircuit, Gauge, Layers3, Rocket, ShieldCheck, Trophy } from "lucide-react";
+import { ArrowUpRight, Bot, BrainCircuit, Gauge, Layers3, Rocket, ShieldCheck, Trophy, Satellite } from "lucide-react";
+import ZeroTrustShowcase from "@/components/ZeroTrustShowcase";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,6 +15,7 @@ type Project = {
   stack: string[];
   metrics: string;
   link?: string;
+  highlights?: string[];
 };
 
 type Lane = {
@@ -25,10 +27,45 @@ type Lane = {
 
 const lanes: Lane[] = [
   {
-    title: "Education Intelligence",
+    title: "Sovereign Systems & Autonomous Agents",
+    marker: "Lane 00 · Flagship",
+    chipClass: "!border-[#2d5e83] !bg-[#2d5e83]/10 !text-[#2d5e83]",
+    projects: [
+      {
+        title: "Zero-Trust AI Web Agent (Project 171)",
+        description:
+          "Sovereign on-device privacy-preserving browser automation platform engineered for ISRO (SIH PS 26171). Features split-brain architecture where all perception, 25-class PII sanitization, MediaPipe face blurring, and INT8 PP-OCRv4 execute strictly in-tab via WebGPU/WASM, guaranteeing zero raw PII cloud egress.",
+        stack: [
+          "React 18",
+          "TypeScript",
+          "WXT (MV3)",
+          "ONNX Runtime Web",
+          "YOLOv8n",
+          "MediaPipe",
+          "Hono",
+          "Gemini 3.8 Flash",
+        ],
+        metrics: "515/515 Unified Tests Passing • 0.16 µs Firewall (6.08M scans/s) • 0 Raw Leaks",
+      },
+    ],
+  },
+  {
+    title: "Education & Academic Intelligence",
     marker: "Lane 01",
     chipClass: "!border-[#2d5e8333] !text-[#2d5e83]",
     projects: [
+      {
+        title: "EduAnswer AI",
+        description:
+          "Enterprise academic intelligence platform automating publication-ready, mark-calibrated exam answer keys and examiner rubrics via a multi-agent AI pipeline and hybrid RAG retrieval.",
+        stack: ["Python 3.12", "FastAPI", "React 19", "Celery", "Redis", "PostgreSQL", "pgvector", "Tailwind 4"],
+        metrics: "Hybrid RAG (BM25+Dense+RRF) • 4D verification scoring • 27 JSON APIs",
+        highlights: [
+          "Multi-agent reasoning: Decomposer (Bloom's taxonomy), DomainSolver (domain prompts), and CriticAuditor (claim-level hallucination audit)",
+          "Hybrid RAG: Dense embeddings + BM25 sparse search + Reciprocal Rank Fusion (RRF) + cross-encoder re-ranking",
+          "Production-grade: Celery workers, WebSocket job tracking, semantic LRU caching, and multi-format exports (DOCX/PDF/MD)",
+        ],
+      },
       {
         title: "Horizon AI v2",
         description:
@@ -220,6 +257,9 @@ export default function ProjectsSection() {
           transition={{ duration: 0.75, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
           className="space-y-10"
         >
+          {/* Flagship Project Showcase */}
+          <ZeroTrustShowcase />
+
           <article className="project-card map-card map-card-hover p-6 md:p-8">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div className="max-w-[72ch]">
@@ -303,6 +343,14 @@ export default function ProjectsSection() {
                       {project.metrics}
                     </div>
 
+                    {project.highlights && project.highlights.length > 0 ? (
+                      <ul className="mt-3.5 space-y-1.5 border-t border-[#21405b]/10 pt-3 text-xs leading-relaxed text-[#21405b]/82 list-disc pl-4">
+                        {project.highlights.map((h, i) => (
+                          <li key={i}>{h}</li>
+                        ))}
+                      </ul>
+                    ) : null}
+
                     {project.link ? (
                       <a
                         href={project.link}
@@ -356,6 +404,8 @@ export default function ProjectsSection() {
                 </thead>
                 <tbody>
                   {[
+                    ["Zero-Trust AI Web Agent", "Sovereign / Defense", "Split-Brain VLM + WebGPU CV", "100% Zero-PII Egress & 515 Verified Tests"],
+                    ["EduAnswer AI", "Academic Intelligence", "Hybrid RAG (BM25+Dense+RRF)", "Mark-calibrated rubrics & 4D verification"],
                     ["Horizon AI v2", "EdTech", "RAG + conversational guidance", "Role-aware learning pathways"],
                     ["Physiq-AI", "Health", "Nutrition intelligence", "Data-rich recommendation loops"],
                     ["TripScraper.ai", "Travel", "Plan generation", "Budget-aware itinerary design"],

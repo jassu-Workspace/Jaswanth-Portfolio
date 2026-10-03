@@ -84,7 +84,15 @@ I focus on building software that is both **ambitious and dependable**, combinin
 
 *These builds represent my strongest blend of AI capability, interface quality, and product pragmatism.*
 
+### 🛰️ Sovereign Systems & Autonomous Agents
+- **Zero-Trust AI Web Agent (Project 171 — ISRO)** 🌟 **[SIH Problem Statement 26171]** <br/>
+  *React 18 • TypeScript • WXT (MV3) • ONNX Runtime Web (WebGPU/WASM) • YOLOv8n • MediaPipe • Hono • Gemini 3.8 Flash* <br/>
+  Sovereign on-device privacy-preserving browser automation platform engineered for ISRO space and defense consoles. Solves the autonomous agent privacy paradox via a strict split-brain architecture: all perception, 25-class PII redaction, MediaPipe face blurring, and INT8 PP-OCRv4 execute strictly in-tab via WebGPU/WASM, ensuring raw sensitive telemetry never reaches cloud LLMs. Validated with 515/515 passing unified tests, 0.16 µs firewall throughput (6.08M scans/sec), and 0 raw PII leaks across 1,200 forensic audits.
+
 ### 📚 Education Intelligence
+- **EduAnswer AI** <br/>
+  *Python 3.12 • FastAPI • Celery • Redis • PostgreSQL (pgvector) • React 19 • Tailwind 4* <br/>
+  Enterprise academic intelligence platform automating publication-ready, mark-calibrated exam answer keys with examiner rubrics and visual aids. Features a multi-agent AI pipeline (DecomposerAgent, DomainSolverAgent, CriticAuditorAgent) with hybrid RAG (Dense embeddings + BM25 sparse search + Reciprocal Rank Fusion + cross-encoder re-ranking), 4-dimensional hallucination verification, asynchronous Celery workers, and 27 RESTful endpoints with real-time WebSocket telemetry.
 - **[Horizon AI v2](https://horizon-ai-v2.vercel.app/)** <br/>
   *React 18 • TypeScript • Supabase • PostgreSQL • FAISS • RAG* <br/>
   Serverless career navigator with role-aware dashboards, RAG-backed learning paths, PDF resume interpretation, and AI tutor workflows. Provides 10-week adaptive roadmaps and multi-role analytics.

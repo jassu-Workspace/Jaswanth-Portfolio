@@ -4,7 +4,7 @@ import { motion, useInView } from "framer-motion";
 import SectionAmbient from "@/components/SectionAmbient";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Anchor, Code, Compass, FlaskConical, Rocket, Route, Trophy } from "lucide-react";
+import { Anchor, Code, Compass, FlaskConical, Rocket, Route, Trophy, Satellite } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -55,6 +55,14 @@ const milestones = [
     ),
     tag: "Active Internship",
     icon: Rocket,
+  },
+  {
+    phase: "Phase 07",
+    title: "Sovereign AI Web Agent (ISRO · SIH 171)",
+    description:
+      "Engineered an edge-cloud split-brain autonomous web agent for ISRO defense and space portals (SIH Problem Statement 26171), achieving 100% zero raw-PII cloud egress across 1,200 forensic audits and 515 passing unified tests.",
+    tag: "ISRO SIH",
+    icon: Satellite,
   },
   {
     phase: "Now",
